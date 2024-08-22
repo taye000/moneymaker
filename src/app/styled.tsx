@@ -418,3 +418,84 @@ export const HeroImage = styled.div`
     margin-top: ${({ theme }) => theme.spacing.large};
   }
 `;
+
+export const DashboardContainer = styled.div`
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: ${({ theme }) => theme.spacing.large};
+`;
+
+export const DashboardCard = styled.div`
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: white;
+  padding: ${({ theme }) => theme.spacing.medium};
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: ${({ theme }) => theme.spacing.medium};
+  text-align: center;
+  width: 100%;
+
+  h3 {
+    font-size: ${({ theme }) => theme.fontSizes.large};
+    margin-bottom: ${({ theme }) => theme.spacing.small};
+  }
+
+  p {
+    font-size: ${({ theme }) => theme.fontSizes.medium};
+  }
+`;
+
+export const CapitalCard = styled(DashboardCard)`
+  background-color: ${({ theme }) => theme.colors.secondary};
+`;
+
+export const ResultCard = styled(DashboardCard)`
+  background-color: ${({ theme }) => theme.colors.tertiary};
+`;
+
+// Dashboard Input Components
+export const InputGroup = styled.div`
+  margin-bottom: ${({ theme }) => theme.spacing.medium};
+`;
+
+export const InputLabel = styled.label`
+  display: block;
+  font-size: ${({ theme }) => theme.fontSizes.medium};
+  margin-bottom: ${({ theme }) => theme.spacing.small};
+  color: ${({ theme }) => theme.colors.text};
+`;
+
+export const NumberInput = styled.input`
+  padding: ${({ theme }) => theme.spacing.small};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: 10px;
+  font-size: ${({ theme }) => theme.fontSizes.medium};
+  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.text};
+  width: 100%;
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.secondary};
+  }
+`;
+
+export const ResultText = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.large};
+  color: ${({ theme }) => theme.colors.text};
+  font-weight: bold;
+  margin: ${({ theme }) => theme.spacing.small} 0;
+`;
+
+// Profit/Loss Indicator
+export const ProfitLossIndicator = styled.span<{ profit: boolean }>`
+  color: ${({ theme, profit }) => (profit ? theme.colors.green : theme.colors.red)};
+  font-size: ${({ theme }) => theme.fontSizes.large};
+  font-weight: bold;
+`;
+
+export const ProfitLossCard = styled(DashboardCard)`
+  background-color: ${({ theme }) => theme.colors.background};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+`;

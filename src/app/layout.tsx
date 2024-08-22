@@ -20,7 +20,44 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </ContentWrapper>
           <Footer />
         </ThemeProvider>
-        <Toaster />
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          gutter={8}
+          containerClassName=""
+          containerStyle={{
+          }}
+          toastOptions={{
+            className: '',
+            duration: 5000,
+            style: {
+              background: theme.colors.background,
+              color: theme.colors.text,
+              borderRadius: '8px',
+              border: `1px solid ${theme.colors.border}`,
+              fontSize: theme.fontSizes.medium,
+              padding: theme.spacing.medium,
+            },
+            success: {
+              style: {
+                background: theme.colors.green,
+                color: '#fff',
+              },
+            },
+            error: {
+              style: {
+                background: theme.colors.red,
+                color: '#fff',
+              },
+            },
+            loading: {
+              style: {
+                background: theme.colors.primary,
+                color: '#fff',
+              },
+            },
+          }}
+        />
       </body>
     </html>
   );

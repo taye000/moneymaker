@@ -9,6 +9,7 @@ export const theme = {
     yellow: '#ffeb3b', // Optional yellow
     green: '#388e3c', // Green for positive feedback
     neutralLight: '#e0e0e0', // Light grey neutral
+    red: '#f44336', // Red for errors
   },
   spacing: {
     small: '8px',
