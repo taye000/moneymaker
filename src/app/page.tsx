@@ -1,17 +1,20 @@
 "use client";
 import * as React from 'react';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import { Content } from './styled';
+import { Container } from './styled';
+import Features from './components/Features';
+import Hero from './components/Hero';
+import WhyChooseUs from './components/WhyChooseUs';
+import CallToAction from './components/CallToAction';
 
 const Home = () => {
   return (
     <main>
-      <Navbar />
-      <Content>
-        {/* Your page content goes here */}
-      </Content>
-      <Footer />
+      <Container>
+        <Hero />
+        <Features />
+        <WhyChooseUs />
+        <CallToAction />
+      </Container>
     </main>
   );
 };

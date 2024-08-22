@@ -1,33 +1,5 @@
 import styled from 'styled-components';
 
-export const theme = {
-  colors: {
-    background: '#f4f4f9', // Light grey background
-    text: '#333', // Dark grey text
-    primary: '#1a73e8', // Blue for primary elements
-    secondary: '#0a58ca', // Slightly lighter blue for secondary elements
-    highlight: '#d32f2f', // Red for highlights and negative feedback
-    border: '#ccc', // Light grey for borders
-    yellow: '#ffeb3b', // Optional yellow
-    green: '#388e3c', // Green for positive feedback
-    neutralLight: '#e0e0e0', // Light grey neutral
-  },
-  spacing: {
-    small: '8px',
-    medium: '16px',
-    large: '24px',
-  },
-  fontSizes: {
-    small: '14px',
-    medium: '16px',
-    large: '20px',
-    xlarge: '24px',
-  },
-  breakpoints: {
-    mobile: '768px',
-  },
-};
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -37,6 +9,12 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.text};
   min-height: 100vh;
+`;
+
+export const ContentWrapper = styled.div`
+  width: 80%;
+  max-width: 1800px;
+  margin: 0 auto;
 `;
 
 export const Header = styled.header`
@@ -364,4 +342,66 @@ export const Content = styled.div`
   justify-content: center;
   padding: ${({ theme }) => theme.spacing.large};
   color: ${({ theme }) => theme.colors.text};
+`;
+
+export const HeroSection = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: ${({ theme }) => theme.spacing.large};
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: white;
+  border-radius: 10px;
+  margin-bottom: ${({ theme }) => theme.spacing.large};
+  min-height: 400px;
+  flex-wrap: wrap;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-direction: column;
+    text-align: center;
+  }
+`;
+
+export const HeroText = styled.div`
+  flex: 1;
+  max-width: 50%;
+  padding: ${({ theme }) => theme.spacing.medium};
+
+  h1 {
+    font-size: ${({ theme }) => theme.fontSizes.xlarge};
+    margin-bottom: ${({ theme }) => theme.spacing.medium};
+  }
+
+  p {
+    font-size: ${({ theme }) => theme.fontSizes.medium};
+    margin-bottom: ${({ theme }) => theme.spacing.medium};
+  }
+
+  button {
+    margin-top: ${({ theme }) => theme.spacing.medium};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    max-width: 100%;
+  }
+`;
+
+export const HeroImage = styled.div`
+  flex: 1;
+  max-width: 50%;
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    max-width: 100%;
+    margin-top: ${({ theme }) => theme.spacing.large};
+  }
 `;

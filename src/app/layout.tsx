@@ -1,27 +1,27 @@
 "use client";
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
-import { ReactNode } from 'react';
 import GlobalStyle from './GlobalStyles';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import { Toaster } from 'react-hot-toast';
+import { ContentWrapper } from './styled';
 
-interface Props {
-  children: ReactNode;
-}
-
-const RootLayout = ({ children }: Props) => {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head />
       <body>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
-          {children}
+          <Navbar />
+          <ContentWrapper>
+            {children}
+          </ContentWrapper>
+          <Footer />
         </ThemeProvider>
         <Toaster />
       </body>
-    </html >
+    </html>
   );
-};
-
-export default RootLayout;
+}
