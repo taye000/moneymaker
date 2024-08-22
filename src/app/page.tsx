@@ -1,4 +1,3 @@
-"use client";
 import * as React from 'react';
 import { Container } from './styled';
 import Features from './components/Features';
