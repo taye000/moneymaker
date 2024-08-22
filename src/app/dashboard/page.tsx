@@ -11,7 +11,8 @@ import {
     CapitalCard,
     ResultCard,
     ProfitLossIndicator,
-    InputGroup
+    InputGroup,
+    InputGroupContainer
 } from '../styled';
 
 const Dashboard: React.FC = () => {
@@ -26,6 +27,12 @@ const Dashboard: React.FC = () => {
         // Initialize current capital when initialCapital changes
         setCurrentCapital(initialCapital);
     }, [initialCapital]);
+
+    const calculatePercentageChange = (): number => {
+        if (initialCapital === 0) return 0; // Avoid division by zero
+        const percentage = ((currentCapital - initialCapital) / initialCapital) * 100;
+        return percentage;
+    };
 
     const handleAddResult = () => {
         const isProfit = result > breakEven;
@@ -47,11 +54,29 @@ const Dashboard: React.FC = () => {
         setResults([{ result, profitLoss }, ...results].slice(0, 5)); // Keep only the 5 most recent results
     };
 
+    const percentageChange = calculatePercentageChange();
+
+    // Convert to fixed value for display purposes
+    const percentageChangeDisplay = percentageChange.toFixed(2);
+    const isProfit = percentageChange >= 0;
+
     return (
         <Container>
             <Title>Dashboard</Title>
             <DashboardContainer>
                 <div>
+                    <CapitalCard>
+                        <h3>Current Capital: ${currentCapital.toFixed(2)}</h3>
+                        <h3>Initial Capital: ${initialCapital.toFixed(2)}</h3>
+                        <h3>
+                            Balance Percentage:
+                            <ProfitLossIndicator profit={isProfit}>
+                                {isProfit ? '+' : '-'}${Math.abs(percentageChange).toFixed(2)}%
+                            </ProfitLossIndicator>
+                        </h3>
+                    </CapitalCard>
+                </div>
+                <InputGroupContainer>
                     <InputGroup>
                         <InputLabel>Initial Capital:</InputLabel>
                         <NumberInput
@@ -84,17 +109,11 @@ const Dashboard: React.FC = () => {
                             onChange={(e) => setBreakEven(Number(e.target.value))}
                         />
                     </InputGroup>
-                    <Button onClick={handleAddResult}>Add Result</Button>
-                </div>
-                <div>
-                    <CapitalCard>
-                        <h3>Current Capital: ${currentCapital.toFixed(2)}</h3>
-                        <h3>Initial Capital: ${initialCapital.toFixed(2)}</h3>
-                    </CapitalCard>
-                </div>
-                <div>
+                </InputGroupContainer>
+                <Button onClick={handleAddResult}>Add Result</Button>
+                <ResultCard>
                     {results.map((res, index) => (
-                        <ResultCard key={index}>
+                        <div key={index}>
                             <h4>Result: ${res.result.toFixed(2)}</h4>
                             <p>
                                 Profit/Loss:
@@ -102,12 +121,13 @@ const Dashboard: React.FC = () => {
                                     {res.profitLoss >= 0 ? '+' : '-'}${Math.abs(res.profitLoss).toFixed(2)}
                                 </ProfitLossIndicator>
                             </p>
-                        </ResultCard>
+                        </div>
                     ))}
-                </div>
+                </ResultCard>
             </DashboardContainer>
         </Container>
     );
 };
+
 
 export default Dashboard;

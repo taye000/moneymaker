@@ -99,21 +99,21 @@ export const TextArea = styled.textarea`
 `;
 
 export const Button = styled.button`
-  padding: ${({ theme }) => theme.spacing.medium} ${({ theme }) => theme.spacing.large};
-  font-size: ${({ theme }) => theme.fontSizes.medium};
-  background-color: ${({ theme }) => theme.colors.secondary};
-  color: white;
+  width: 100%;
+  padding: ${({ theme }) => theme.spacing.small} ${({ theme }) => theme.spacing.medium};
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.textOnPrimary};
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  margin-top: ${({ theme }) => theme.spacing.medium};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.highlight};
+    background-color: ${({ theme }) => theme.colors.primaryHover};
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: 100%;
+  @media (max-width: 768px) {
+    width: auto; // Allow the button to shrink on smaller screens
   }
 `;
 
@@ -446,17 +446,56 @@ export const DashboardCard = styled.div`
   }
 `;
 
-export const CapitalCard = styled(DashboardCard)`
-  background-color: ${({ theme }) => theme.colors.secondary};
-`;
-
-export const ResultCard = styled(DashboardCard)`
-  background-color: ${({ theme }) => theme.colors.tertiary};
-`;
-
-// Dashboard Input Components
-export const InputGroup = styled.div`
+export const CapitalCard = styled.div`
+  background-color: ${({ theme }) => theme.colors.neutralLight};
+  padding: ${({ theme }) => theme.spacing.medium};
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: ${({ theme }) => theme.spacing.medium};
+
+  h3 {
+    color: ${({ theme }) => theme.colors.text}; /* Use text color for h3 elements */
+    margin-bottom: ${({ theme }) => theme.spacing.small};
+  }
+`;
+
+export const ResultCard = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); // 5 columns layout
+  grid-template-rows: repeat(2, auto); // 2 rows layout
+  gap: ${({ theme }) => theme.spacing.small}; // Add space between grid items
+  background-color: ${({ theme }) => theme.colors.secondary};
+  padding: ${({ theme }) => theme.spacing.medium};
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: ${({ theme }) => theme.spacing.medium};
+
+  h4 {
+    color: ${({ theme }) => theme.colors.text}; /* Use text color for h4 elements */
+    margin: 0;
+    font-size: ${({ theme }) => theme.fontSizes.small};
+  }
+
+  p {
+    margin: 0;
+    font-size: ${({ theme }) => theme.fontSizes.small};
+  }
+`;
+
+export const InputGroupContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.medium};
+  justify-content: space-between;
+`;
+
+export const InputGroup = styled.div`
+  flex: 1 1 calc(50% - ${({ theme }) => theme.spacing.medium}); /* Two inputs per row with space between */
+  margin-bottom: ${({ theme }) => theme.spacing.medium};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex: 1 1 100%; /* Full width on smaller screens */
+  }
 `;
 
 export const InputLabel = styled.label`
@@ -467,19 +506,20 @@ export const InputLabel = styled.label`
 `;
 
 export const NumberInput = styled.input`
+  width: 100%;
   padding: ${({ theme }) => theme.spacing.small};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 10px;
   font-size: ${({ theme }) => theme.fontSizes.medium};
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.text};
-  width: 100%;
 
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.colors.secondary};
   }
 `;
+
 
 export const ResultText = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.large};
