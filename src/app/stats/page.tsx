@@ -1,15 +1,15 @@
 import React from 'react';
 import { Container, Content, Title } from '../styled';
 
-const DASHBOARD: React.FC = () => {
+const STATS: React.FC = () => {
     return (
         <Container>
             <Content>
-                <Title>Dashboard</Title>
+                <Title>Statistics</Title>
 
             </Content>
         </Container>
     );
 };
 
-export default DASHBOARD;
+export default STATS;

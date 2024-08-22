@@ -9,7 +9,7 @@ export const Container = styled.div`
   padding: ${({ theme }) => theme.spacing.large};
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.text};
-  min-height: 100vh;
+  text-align: center;
 `;
 
 export const ContentWrapper = styled.div`
@@ -23,10 +23,6 @@ export const Header = styled.header`
   text-align: center;
 `;
 
-export const Title = styled.h1`
-  font-size: ${({ theme }) => theme.fontSizes.xlarge};
-  color: ${({ theme }) => theme.colors.primary};
-`;
 
 export const CardContainer = styled.div`
   display: flex;
@@ -335,14 +331,30 @@ export const SubscribeSection = styled.div`
 `;
 
 export const Content = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 70vh;
-  align-items: center;
-  justify-content: center;
-  padding: ${({ theme }) => theme.spacing.large};
-  color: ${({ theme }) => theme.colors.text};
+  width: 80%;
+  max-width: 1200px; /* Adjust max-width for better readability */
+  margin: 0 auto;
+  padding: ${({ theme }) => theme.spacing.medium};
+  background-color: ${({ theme }) => theme.colors.white}; /* Adding a background color for contrast */
+  border-radius: ${({ theme }) => theme.borderRadius}; /* Rounded corners for better aesthetics */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a lifted effect */
+
+  p {
+    font-size: ${({ theme }) => theme.fontSizes.medium};
+    line-height: 1.6;
+    margin-bottom: ${({ theme }) => theme.spacing.medium};
+  }
+
+  strong {
+    color: ${({ theme }) => theme.colors.primary}; /* Highlighting important text */
+  }
+`;
+
+export const Title = styled.h1`
+  font-size: ${({ theme }) => theme.fontSizes.xlarge};
+  color: ${({ theme }) => theme.colors.primary};
+  margin-bottom: ${({ theme }) => theme.spacing.medium};
+  font-weight: bold; /* Make the title stand out */
 `;
 
 export const HeroSection = styled.section`
