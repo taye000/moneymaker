@@ -452,11 +452,41 @@ export const CapitalCard = styled.div`
   border-radius: 8px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: ${({ theme }) => theme.spacing.medium};
+`;
 
-  h3 {
-    color: ${({ theme }) => theme.colors.text}; /* Use text color for h3 elements */
-    margin-bottom: ${({ theme }) => theme.spacing.small};
+export const ColumnContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.medium};
+`;
+
+export const Section = styled.div`
+  flex: 1;
+  min-width: 250px; /* Adjust as needed */
+  margin-bottom: ${({ theme }) => theme.spacing.medium};
+`;
+
+export const CardTitle = styled.h4`
+  color: ${({ theme }) => theme.colors.primary};
+  margin-bottom: ${({ theme }) => theme.spacing.small};
+`;
+
+export const CardValue = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: ${({ theme }) => theme.spacing.small};
+  font-size: ${({ theme }) => theme.fontSizes.medium};
+
+  svg {
+    margin-right: ${({ theme }) => theme.spacing.small};
+    color: ${({ theme }) => theme.colors.text};
   }
+`;
+
+export const BoldValue = styled.span`
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.text};
+  margin-left: ${({ theme }) => theme.spacing.small};
 `;
 
 // Define the fade-in animation
@@ -484,11 +514,13 @@ export const ResultCard = styled.div`
   overflow-y: auto;
 
   @media (min-width: 768px) {
-    grid-template-rows: repeat(3, minmax(100px, 1fr));
+    grid-template-columns: repeat(5, 1fr); /* Maintain 5 columns on tablet */
+    grid-auto-rows: minmax(100px, auto); /* Ensure rows expand to fit content */
   }
 
   @media (min-width: 1024px) {
-    grid-template-rows: repeat(5, minmax(100px, 1fr));
+    grid-template-columns: repeat(5, 1fr); /* Maintain 5 columns on desktop */
+    grid-auto-rows: minmax(100px, auto); /* Ensure rows expand to fit content */
   }
 `;
 
@@ -547,7 +579,6 @@ export const NumberInput = styled.input`
     border-color: ${({ theme }) => theme.colors.secondary};
   }
 `;
-
 
 export const ResultText = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.large};

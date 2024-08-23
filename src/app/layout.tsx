@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
           toastOptions={{
             className: '',
-            duration: 5000,
+            duration: 2000,
             style: {
               background: theme.colors.background,
               color: theme.colors.text,
