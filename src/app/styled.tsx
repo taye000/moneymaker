@@ -463,7 +463,7 @@ export const ResultCard = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr); // 5 columns layout
   grid-template-rows: repeat(2, auto); // 2 rows layout
-  gap: ${({ theme }) => theme.spacing.small}; // Add space between grid items
+  gap: ${({ theme }) => theme.spacing.small};
   background-color: ${({ theme }) => theme.colors.secondary};
   padding: ${({ theme }) => theme.spacing.medium};
   border-radius: 8px;
@@ -471,7 +471,7 @@ export const ResultCard = styled.div`
   margin-top: ${({ theme }) => theme.spacing.medium};
 
   h4 {
-    color: ${({ theme }) => theme.colors.text}; /* Use text color for h4 elements */
+    color: ${({ theme }) => theme.colors.neutralLight};
     margin: 0;
     font-size: ${({ theme }) => theme.fontSizes.small};
   }
