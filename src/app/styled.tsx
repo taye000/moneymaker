@@ -529,8 +529,8 @@ export const ResultText = styled.p`
 `;
 
 // Profit/Loss Indicator
-export const ProfitLossIndicator = styled.span<{ profit: boolean }>`
-  color: ${({ theme, profit }) => (profit ? theme.colors.green : theme.colors.red)};
+export const ProfitLossIndicator = styled.span<{ $profit: boolean }>`
+  color: ${({ theme, $profit }) => ($profit ? theme.colors.green : theme.colors.red)};
   font-size: ${({ theme }) => theme.fontSizes.large};
   font-weight: bold;
 `;

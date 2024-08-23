@@ -70,7 +70,7 @@ const Dashboard: React.FC = () => {
                         <h3>Initial Capital: ${initialCapital.toFixed(2)}</h3>
                         <h3>
                             Balance Percentage:
-                            <ProfitLossIndicator profit={isProfit}>
+                            <ProfitLossIndicator $profit={isProfit}>
                                 {isProfit ? '+' : '-'}${Math.abs(percentageChange).toFixed(2)}%
                             </ProfitLossIndicator>
                         </h3>
@@ -117,7 +117,7 @@ const Dashboard: React.FC = () => {
                             <h4>Result: ${res.result.toFixed(2)}</h4>
                             <p>
                                 Profit/Loss:
-                                <ProfitLossIndicator profit={res.profitLoss >= 0}>
+                                <ProfitLossIndicator $profit={res.profitLoss >= 0}>
                                     {res.profitLoss >= 0 ? '+' : '-'}${Math.abs(res.profitLoss).toFixed(2)}
                                 </ProfitLossIndicator>
                             </p>
