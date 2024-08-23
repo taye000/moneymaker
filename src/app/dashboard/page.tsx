@@ -12,7 +12,9 @@ import {
     ResultCard,
     ProfitLossIndicator,
     InputGroup,
-    InputGroupContainer
+    InputGroupContainer,
+    ResultItem,
+    NewResultItem
 } from '../styled';
 
 const Dashboard: React.FC = () => {
@@ -69,9 +71,9 @@ const Dashboard: React.FC = () => {
                         <h3>Current Capital: ${currentCapital.toFixed(2)}</h3>
                         <h3>Initial Capital: ${initialCapital.toFixed(2)}</h3>
                         <h3>
-                            Balance Percentage:
+                            Profit/Loss % : 
                             <ProfitLossIndicator $profit={isProfit}>
-                                {isProfit ? '+' : '-'}${Math.abs(percentageChange).toFixed(2)}%
+                                {isProfit ? ' +' : ' -'}{Math.abs(percentageChange).toFixed(2)}%
                             </ProfitLossIndicator>
                         </h3>
                     </CapitalCard>
@@ -111,17 +113,30 @@ const Dashboard: React.FC = () => {
                     </InputGroup>
                 </InputGroupContainer>
                 <Button onClick={handleAddResult}>Add Result</Button>
+
                 <ResultCard>
                     {results.map((res, index) => (
-                        <div key={index}>
-                            <h4>Result: ${res.result.toFixed(2)}</h4>
-                            <p>
-                                Profit/Loss:
-                                <ProfitLossIndicator $profit={res.profitLoss >= 0}>
-                                    {res.profitLoss >= 0 ? '+' : '-'}${Math.abs(res.profitLoss).toFixed(2)}
-                                </ProfitLossIndicator>
-                            </p>
-                        </div>
+                        index === 0 ? (
+                            <NewResultItem key={index}>
+                                <h4>Result: ${res.result.toFixed(2)}</h4>
+                                <p>
+                                    Profit/Loss:
+                                    <ProfitLossIndicator $profit={res.profitLoss >= 0}>
+                                        {res.profitLoss >= 0 ? '+' : '-'}${Math.abs(res.profitLoss).toFixed(2)}
+                                    </ProfitLossIndicator>
+                                </p>
+                            </NewResultItem>
+                        ) : (
+                            <ResultItem key={index}>
+                                <h4>Result: ${res.result.toFixed(2)}</h4>
+                                <p>
+                                    Profit/Loss:
+                                    <ProfitLossIndicator $profit={res.profitLoss >= 0}>
+                                        {res.profitLoss >= 0 ? '+' : '-'}${Math.abs(res.profitLoss).toFixed(2)}
+                                    </ProfitLossIndicator>
+                                </p>
+                            </ResultItem>
+                        )
                     ))}
                 </ResultCard>
             </DashboardContainer>

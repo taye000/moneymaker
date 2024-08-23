@@ -1,5 +1,5 @@
 "use client";
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -459,19 +459,42 @@ export const CapitalCard = styled.div`
   }
 `;
 
+// Define the fade-in animation
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-10px); // Optional: slight upward movement
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 export const ResultCard = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr); // 5 columns layout
-  grid-template-rows: repeat(2, auto); // 2 rows layout
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
   gap: ${({ theme }) => theme.spacing.small};
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.neutralLight};
   padding: ${({ theme }) => theme.spacing.medium};
   border-radius: 8px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   margin-top: ${({ theme }) => theme.spacing.medium};
+  overflow-y: auto;
 
+  @media (min-width: 768px) {
+    grid-template-rows: repeat(3, minmax(100px, 1fr));
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-rows: repeat(5, minmax(100px, 1fr));
+  }
+`;
+
+export const ResultItem = styled.div`
   h4 {
-    color: ${({ theme }) => theme.colors.neutralLight};
+    color: ${({ theme }) => theme.colors.text};
     margin: 0;
     font-size: ${({ theme }) => theme.fontSizes.small};
   }
@@ -481,6 +504,11 @@ export const ResultCard = styled.div`
     font-size: ${({ theme }) => theme.fontSizes.small};
   }
 `;
+
+export const NewResultItem = styled(ResultItem)`
+  animation: ${fadeIn} 0.5s ease-out;
+`;
+
 
 export const InputGroupContainer = styled.div`
   display: flex;
