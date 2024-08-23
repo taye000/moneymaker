@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { CapitalCard, Section, CardTitle, CardValue, ProfitLossIndicator, Button, Container, DashboardContainer, InputGroup, InputGroupContainer, InputLabel, NewResultItem, NumberInput, ResultCard, ResultItem, Title, ColumnContainer, BoldValue } from '../styled';
-import { FaDollarSign, FaChartLine, FaChartPie, FaBullseye, FaExclamationCircle } from 'react-icons/fa';
+import { CapitalCard, Section, CardTitle, CardValue, ProfitLossIndicator, Button, Container, DashboardContainer, InputGroup, InputGroupContainer, InputLabel, NewResultItem, NumberInput, ResultCard, ResultItem, Title, ColumnContainer, BoldValue, HelpText, InputGroupSection, HelpIcon, HelpTextContainer } from '../styled';
+import { FaDollarSign, FaChartLine, FaChartPie, FaBullseye, FaExclamationCircle, FaInfoCircle } from 'react-icons/fa';
 
 const Dashboard: React.FC = () => {
     const [initialCapital, setInitialCapital] = useState<number>(0);
@@ -131,85 +131,96 @@ const Dashboard: React.FC = () => {
                                     {stopLossPercent > 0 && (
                                         <CardValue>
                                             <FaExclamationCircle /> Stop Loss %: <BoldValue>{stopLossPercent}%</BoldValue>
-                                            </CardValue>
+                                        </CardValue>
                                     )}
                                     {stopLossAmount > 0 && (
                                         <CardValue>
                                             <FaExclamationCircle /> Stop Loss Amount: <BoldValue>${stopLossAmount.toFixed(2)}</BoldValue>
-                                            </CardValue>
+                                        </CardValue>
                                     )}
                                 </Section>
                             )}
                     </ColumnContainer>
                 </CapitalCard>
                 <InputGroupContainer>
-                    <InputGroup>
-                        <InputLabel>Initial Capital:</InputLabel>
-                        <NumberInput
-                            type="number"
-                            value={initialCapital}
-                            onChange={(e) => setInitialCapital(Number(e.target.value))}
-                        />
-                    </InputGroup>
-                    <InputGroup>
-                        <InputLabel>Stake per Round:</InputLabel>
-                        <NumberInput
-                            type="number"
-                            value={stake}
-                            onChange={(e) => setStake(Number(e.target.value))}
-                        />
-                    </InputGroup>
-                    <InputGroup>
-                        <InputLabel>Target Profit %:</InputLabel>
-                        <NumberInput
-                            type="number"
-                            value={targetProfitPercent}
-                            onChange={(e) => setTargetProfitPercent(Number(e.target.value))}
-                        />
-                    </InputGroup>
-                    <InputGroup>
-                        <InputLabel>Target Profit Amount:</InputLabel>
-                        <NumberInput
-                            type="number"
-                            value={targetProfitAmount}
-                            onChange={(e) => setTargetProfitAmount(Number(e.target.value))}
-                        />
-                    </InputGroup>
-                    <InputGroup>
-                        <InputLabel>Stop Loss %:</InputLabel>
-                        <NumberInput
-                            type="number"
-                            value={stopLossPercent}
-                            onChange={(e) => setStopLossPercent(Number(e.target.value))}
-                        />
-                    </InputGroup>
-                    <InputGroup>
-                        <InputLabel>Stop Loss Amount:</InputLabel>
-                        <NumberInput
-                            type="number"
-                            value={stopLossAmount}
-                            onChange={(e) => setStopLossAmount(Number(e.target.value))}
-                        />
-                    </InputGroup>
-                    <InputGroup>
-                        <InputLabel>Break-Even:</InputLabel>
-                        <NumberInput
-                            type="number"
-                            value={breakEven}
-                            onChange={(e) => setBreakEven(Number(e.target.value))}
-                        />
-                    </InputGroup>
-                    <InputGroup>
-                        <InputLabel>Result:</InputLabel>
-                        <NumberInput
-                            type="number"
-                            value={result}
-                            onChange={(e) => setResult(Number(e.target.value))}
-                        />
-                    </InputGroup>
+                    <InputGroupSection>
+                        <InputGroup>
+                            <InputLabel>Initial Capital:</InputLabel>
+                            <NumberInput
+                                type="number"
+                                value={initialCapital}
+                                onChange={(e) => setInitialCapital(Number(e.target.value))}
+                            />
+                        </InputGroup>
+                        <InputGroup>
+                            <InputLabel>Stake per Round:</InputLabel>
+                            <NumberInput
+                                type="number"
+                                value={stake}
+                                onChange={(e) => setStake(Number(e.target.value))}
+                            />
+                        </InputGroup>
+                        <InputGroup>
+                            <InputLabel>Target Profit %:</InputLabel>
+                            <NumberInput
+                                type="number"
+                                value={targetProfitPercent}
+                                onChange={(e) => setTargetProfitPercent(Number(e.target.value))}
+                            />
+                        </InputGroup>
+                        <InputGroup>
+                            <InputLabel>Target Profit Amount:</InputLabel>
+                            <NumberInput
+                                type="number"
+                                value={targetProfitAmount}
+                                onChange={(e) => setTargetProfitAmount(Number(e.target.value))}
+                            />
+                        </InputGroup>
+                        <InputGroup>
+                            <InputLabel>Stop Loss %:</InputLabel>
+                            <NumberInput
+                                type="number"
+                                value={stopLossPercent}
+                                onChange={(e) => setStopLossPercent(Number(e.target.value))}
+                            />
+                        </InputGroup>
+                        <InputGroup>
+                            <InputLabel>Stop Loss Amount:</InputLabel>
+                            <NumberInput
+                                type="number"
+                                value={stopLossAmount}
+                                onChange={(e) => setStopLossAmount(Number(e.target.value))}
+                            />
+                        </InputGroup>
+                        <InputGroup>
+                            <InputLabel>Break-Even:</InputLabel>
+                            <NumberInput
+                                type="number"
+                                value={breakEven}
+                                onChange={(e) => setBreakEven(Number(e.target.value))}
+                            />
+                        </InputGroup>
+                    </InputGroupSection>
+                    <InputGroupSection>
+                        <InputGroup>
+                            <InputLabel>Result:</InputLabel>
+                            <NumberInput
+                                type="number"
+                                value={result}
+                                onChange={(e) => setResult(Number(e.target.value))}
+                            />
+                        </InputGroup>
+                        <HelpTextContainer>
+                            <HelpIcon>
+                                <FaInfoCircle />
+                            </HelpIcon>
+                            <HelpText>
+                                This field is frequently updated with new results.
+                            </HelpText>
+                        </HelpTextContainer>
+                    </InputGroupSection>
                 </InputGroupContainer>
                 <Button onClick={handleAddResult}>Add Result</Button>
-
                 <ResultCard>
                     {results.map((res, index) => (
                         index === 0 ? (

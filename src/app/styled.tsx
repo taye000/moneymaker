@@ -541,42 +541,68 @@ export const NewResultItem = styled(ResultItem)`
   animation: ${fadeIn} 0.5s ease-out;
 `;
 
-
 export const InputGroupContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.medium}; /* Space between sections */
+`;
+
+export const InputGroupSection = styled.div`
+  background-color: ${({ theme }) => theme.colors.neutralLight};
+  padding: ${({ theme }) => theme.spacing.medium};
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 2 columns */
   gap: ${({ theme }) => theme.spacing.medium};
-  justify-content: space-between;
 `;
 
 export const InputGroup = styled.div`
-  flex: 1 1 calc(50% - ${({ theme }) => theme.spacing.medium}); /* Two inputs per row with space between */
-  margin-bottom: ${({ theme }) => theme.spacing.medium};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    flex: 1 1 100%; /* Full width on smaller screens */
-  }
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.small};
 `;
 
 export const InputLabel = styled.label`
-  display: block;
-  font-size: ${({ theme }) => theme.fontSizes.medium};
+  font-weight: bold;
   margin-bottom: ${({ theme }) => theme.spacing.small};
-  color: ${({ theme }) => theme.colors.text};
 `;
 
 export const NumberInput = styled.input`
-  width: 100%;
   padding: ${({ theme }) => theme.spacing.small};
+  border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 10px;
   font-size: ${({ theme }) => theme.fontSizes.medium};
-  background-color: ${({ theme }) => theme.colors.background};
-  color: ${({ theme }) => theme.colors.text};
+  width: 100%; /* Full width of the container */
+`;
 
-  &:focus {
-    outline: none;
-    border-color: ${({ theme }) => theme.colors.secondary};
+export const HelpTextContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.small};
+`;
+
+export const HelpIcon = styled.div`
+  cursor: pointer;
+`;
+
+export const HelpText = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes.small};
+  color: ${({ theme }) => theme.colors.textSecondary};
+  position: absolute;
+  margin-left: ${({ theme }) => theme.spacing.medium};
+  background-color: ${({ theme }) => theme.colors.neutralLight};
+  padding: ${({ theme }) => theme.spacing.small};
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  white-space: nowrap;
+  
+  ${HelpIcon}:hover + & {
+    opacity: 1;
+    visibility: visible;
   }
 `;
 
