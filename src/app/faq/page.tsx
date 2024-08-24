@@ -13,7 +13,7 @@ const FAQ: React.FC = () => {
 
                 <h3>How do I get started?</h3>
                 <p>
-                    Click the "Get Started" button on the homepage to sign up and start using Moneymakers. Follow the onboarding process to set up your account.
+                    Click the &quot;Get Started&quot; button on the homepage to sign up and start using Moneymakers. Follow the onboarding process to set up your account.
                 </p>
 
                 <h3>Is my data secure?</h3>

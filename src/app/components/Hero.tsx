@@ -1,5 +1,6 @@
 import React from 'react';
 import { HeroSection, HeroText, HeroImage, Button, Title } from '../styled';
+import Image from 'next/image';
 
 const Hero: React.FC = () => {
     return (
@@ -12,7 +13,13 @@ const Hero: React.FC = () => {
                 <Button>Get Started</Button>
             </HeroText>
             <HeroImage>
-                <img src="/hero.jpg" alt="Moneymakers Hero" />
+                <Image
+                    src="/hero.jpg"
+                    alt="Moneymakers Hero"
+                    width={500} // Adjust width as needed
+                    height={300} // Adjust height as needed
+                    layout="responsive" // Adjust layout as needed
+                />
             </HeroImage>
         </HeroSection>
     );

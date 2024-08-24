@@ -7,7 +7,7 @@ const AboutUs: React.FC = () => {
             <Content>
                 <Title>About Us</Title>
                 <p>
-                    Welcome to <strong>Moneymakers</strong>! We are dedicated to providing you with the best tools for tracking your trades, profits, losses, and targets. Our mission is to help you stay on top of your game, whether you're involved in official trading or unofficial gambling.
+                    Welcome to <span style={{ fontWeight: 'bold' }}>Moneymakers</span>! We are dedicated to providing you with the best tools for tracking your trades, profits, losses, and targets. Our mission is to help you stay on top of your game, whether you&apos;re involved in official trading or unofficial gambling.
                 </p>
                 <p>
                     Our team is committed to innovation and customer satisfaction. We continuously update our platform to meet your needs and ensure a seamless experience.
