@@ -15,9 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider theme={theme}>
           <GlobalStyle />
           <Navbar />
-          <ContentWrapper>
-            {children}
-          </ContentWrapper>
+          {children}
           <Footer />
         </ThemeProvider>
         <Toaster
@@ -35,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               color: theme.colors.text,
               borderRadius: '8px',
               border: `1px solid ${theme.colors.border}`,
-              fontSize: theme.fontSizes.medium,
+              fontSize: theme.typography.heading3.fontSize,
               padding: theme.spacing.medium,
             },
             success: {

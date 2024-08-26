@@ -10,19 +10,34 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.text};
   text-align: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.small};
+  }
 `;
 
 export const ContentWrapper = styled.div`
   width: 80%;
   max-width: 1800px;
   margin: 0 auto;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.largeTablet}) {
+    width: 90%;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
 export const Header = styled.header`
   margin-bottom: ${({ theme }) => theme.spacing.large};
   text-align: center;
-`;
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin-bottom: ${({ theme }) => theme.spacing.medium};
+  }
+`;
 
 export const CardContainer = styled.div`
   display: flex;
@@ -30,16 +45,20 @@ export const CardContainer = styled.div`
   gap: ${({ theme }) => theme.spacing.medium};
   justify-content: center;
   margin-bottom: ${({ theme }) => theme.spacing.large};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.smallTablet}) {
+    gap: ${({ theme }) => theme.spacing.small};
+  }
 `;
 
 export const Card = styled.div`
   background-color: ${({ theme }) => theme.colors.primary};
-  color: white;
+  color: ${({ theme }) => theme.colors.textOnPrimary};
   padding: ${({ theme }) => theme.spacing.medium};
-  border-radius: 10px;
+  border-radius: ${({ theme }) => theme.borderRadius};
   width: 150px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: ${({ theme }) => theme.shadows.cardShadow};
   transition: transform 0.2s ease-in-out;
 
   &:hover {
@@ -69,7 +88,7 @@ export const Input = styled.input`
   padding: ${({ theme }) => theme.spacing.small};
   margin: ${({ theme }) => theme.spacing.small};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 10px;
+  border-radius: ${({ theme }) => theme.borderRadius};
   font-size: ${({ theme }) => theme.fontSizes.medium};
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.text};
@@ -85,7 +104,7 @@ export const TextArea = styled.textarea`
   padding: ${({ theme }) => theme.spacing.small};
   margin: ${({ theme }) => theme.spacing.small};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 10px;
+  border-radius: ${({ theme }) => theme.borderRadius};
   font-size: ${({ theme }) => theme.fontSizes.medium};
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.text};
@@ -104,7 +123,7 @@ export const Button = styled.button`
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.textOnPrimary};
   border: none;
-  border-radius: 5px;
+  border-radius: ${({ theme }) => theme.borderRadius};
   cursor: pointer;
   margin-top: ${({ theme }) => theme.spacing.medium};
 
@@ -112,7 +131,7 @@ export const Button = styled.button`
     background-color: ${({ theme }) => theme.colors.primaryHover};
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: auto; // Allow the button to shrink on smaller screens
   }
 `;
@@ -123,6 +142,10 @@ export const IconButton = styled(Button)`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.xsmall};
+  }
 `;
 
 export const SmallCard = styled(Card)`
@@ -159,7 +182,6 @@ export const RedText = styled.span`
   color: ${({ theme }) => theme.colors.red};
 `;
 
-
 export const NavbarContainer = styled.nav`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.primary};
@@ -167,14 +189,14 @@ export const NavbarContainer = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: ${({ theme }) => theme.shadows.navbarShadow};
 `;
 
 export const Logo = styled.a`
   font-size: ${({ theme }) => theme.fontSizes.large};
-  color: white;
+  color: ${({ theme }) => theme.colors.textOnPrimary};
   text-decoration: none;
-  font-weight: bold;
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
   cursor: pointer;
 
   &:hover {
@@ -192,12 +214,12 @@ export const NavLinks = styled.div`
 `;
 
 export const NavLink = styled.a`
-  color: white;
+  color: ${({ theme }) => theme.colors.textOnPrimary};
   text-decoration: none;
   font-size: ${({ theme }) => theme.fontSizes.medium};
   cursor: pointer;
   padding: ${({ theme }) => theme.spacing.small} ${({ theme }) => theme.spacing.medium};
-  border-radius: 10px;
+  border-radius: ${({ theme }) => theme.borderRadius};
   transition: background-color 0.3s ease;
 
   &:hover {
@@ -207,11 +229,11 @@ export const NavLink = styled.a`
 
 export const AuthButton = styled.button`
   background-color: ${({ theme }) => theme.colors.highlight};
-  color: white;
+  color: ${({ theme }) => theme.colors.textOnHighlight};
   font-size: ${({ theme }) => theme.fontSizes.medium};
   padding: ${({ theme }) => theme.spacing.small} ${({ theme }) => theme.spacing.medium};
   border: none;
-  border-radius: 10px;
+  border-radius: ${({ theme }) => theme.borderRadius};
   cursor: pointer;
   transition: background-color 0.3s ease;
 
@@ -224,7 +246,7 @@ export const MobileMenuButton = styled.button`
   display: none;
   background: none;
   border: none;
-  color: white;
+  color: ${({ theme }) => theme.colors.textOnPrimary};
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSizes.large};
 
@@ -251,7 +273,7 @@ export const MobileNavLinks = styled.div`
 export const FooterContainer = styled.footer`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.secondary};
-  color: white;
+  color: ${({ theme }) => theme.colors.textOnPrimary};
   padding: ${({ theme }) => theme.spacing.large};
   display: flex;
   flex-direction: column;
@@ -265,7 +287,7 @@ export const FooterLinks = styled.div`
   gap: ${({ theme }) => theme.spacing.large};
 
   a {
-    color: white;
+    color: ${({ theme }) => theme.colors.textOnPrimary};
     text-decoration: none;
     font-size: ${({ theme }) => theme.fontSizes.medium};
     transition: color 0.3s ease;
@@ -286,7 +308,7 @@ export const SocialIcons = styled.div`
   gap: ${({ theme }) => theme.spacing.medium};
 
   a {
-    color: white;
+    color: ${({ theme }) => theme.colors.textOnPrimary};
     transition: color 0.3s ease;
 
     &:hover {
@@ -309,8 +331,8 @@ export const SubscribeSection = styled.div`
   input {
     width: 300px;
     padding: ${({ theme }) => theme.spacing.small};
-    border-radius: 10px;
-    border: none;
+    border-radius: ${({ theme }) => theme.borderRadius};
+    border: 1px solid ${({ theme }) => theme.colors.border};
     font-size: ${({ theme }) => theme.fontSizes.medium};
     color: ${({ theme }) => theme.colors.text};
   }
@@ -320,11 +342,7 @@ export const SubscribeSection = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    input {
-      width: 100%;
-    }
-
-    button {
+    input, button {
       width: 100%;
     }
   }
@@ -332,12 +350,12 @@ export const SubscribeSection = styled.div`
 
 export const Content = styled.div`
   width: 80%;
-  max-width: 1200px; /* Adjust max-width for better readability */
+  max-width: 1200px;
   margin: 0 auto;
   padding: ${({ theme }) => theme.spacing.medium};
-  background-color: ${({ theme }) => theme.colors.white}; /* Adding a background color for contrast */
-  border-radius: ${({ theme }) => theme.borderRadius}; /* Rounded corners for better aesthetics */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a lifted effect */
+  background-color: ${({ theme }) => theme.colors.background};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  box-shadow: ${({ theme }) => theme.shadows.cardShadow};
 
   p {
     font-size: ${({ theme }) => theme.fontSizes.medium};
@@ -346,7 +364,7 @@ export const Content = styled.div`
   }
 
   strong {
-    color: ${({ theme }) => theme.colors.primary}; /* Highlighting important text */
+    color: ${({ theme }) => theme.colors.primary};
   }
 `;
 
@@ -354,7 +372,7 @@ export const Title = styled.h1`
   font-size: ${({ theme }) => theme.fontSizes.xlarge};
   color: ${({ theme }) => theme.colors.primary};
   margin-bottom: ${({ theme }) => theme.spacing.medium};
-  font-weight: bold; /* Make the title stand out */
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
 `;
 
 export const HeroSection = styled.section`
@@ -363,8 +381,8 @@ export const HeroSection = styled.section`
   justify-content: space-between;
   padding: ${({ theme }) => theme.spacing.large};
   background-color: ${({ theme }) => theme.colors.primary};
-  color: white;
-  border-radius: 10px;
+  color: ${({ theme }) => theme.colors.textOnPrimary};
+  border-radius: ${({ theme }) => theme.borderRadius};
   margin-bottom: ${({ theme }) => theme.spacing.large};
   min-height: 400px;
   flex-wrap: wrap;
@@ -409,7 +427,7 @@ export const HeroImage = styled.div`
     width: 100%;
     max-width: 500px;
     height: auto;
-    border-radius: 10px;
+    border-radius: ${({ theme }) => theme.borderRadius};
     object-fit: cover;
   }
 
@@ -428,10 +446,10 @@ export const DashboardContainer = styled.div`
 
 export const DashboardCard = styled.div`
   background-color: ${({ theme }) => theme.colors.primary};
-  color: white;
+  color: ${({ theme }) => theme.colors.textOnPrimary};
   padding: ${({ theme }) => theme.spacing.medium};
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: ${({ theme }) => theme.borderRadius};
+  box-shadow: ${({ theme }) => theme.shadows.cardShadow};
   margin-bottom: ${({ theme }) => theme.spacing.medium};
   text-align: center;
   width: 100%;
@@ -449,7 +467,7 @@ export const DashboardCard = styled.div`
 export const CapitalCard = styled.div`
   background-color: ${({ theme }) => theme.colors.neutralLight};
   padding: ${({ theme }) => theme.spacing.medium};
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.borderRadius};
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: ${({ theme }) => theme.spacing.medium};
 `;
@@ -462,7 +480,7 @@ export const ColumnContainer = styled.div`
 
 export const Section = styled.div`
   flex: 1;
-  min-width: 250px; /* Adjust as needed */
+  min-width: 250px;
   margin-bottom: ${({ theme }) => theme.spacing.medium};
 `;
 
@@ -484,16 +502,15 @@ export const CardValue = styled.div`
 `;
 
 export const BoldValue = styled.span`
-  font-weight: bold;
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.text};
   margin-left: ${({ theme }) => theme.spacing.small};
 `;
 
-// Define the fade-in animation
 const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(-10px); // Optional: slight upward movement
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
@@ -508,19 +525,19 @@ export const ResultCard = styled.div`
   gap: ${({ theme }) => theme.spacing.small};
   background-color: ${({ theme }) => theme.colors.neutralLight};
   padding: ${({ theme }) => theme.spacing.medium};
-  border-radius: 8px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: ${({ theme }) => theme.borderRadius};
+  box-shadow: ${({ theme }) => theme.shadows.cardShadow};
   margin-top: ${({ theme }) => theme.spacing.medium};
   overflow-y: auto;
 
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(5, 1fr); /* Maintain 5 columns on tablet */
-    grid-auto-rows: minmax(100px, auto); /* Ensure rows expand to fit content */
+  @media (min-width: ${({ theme }) => theme.breakpoints.smallTablet}) {
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: minmax(100px, auto);
   }
 
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(5, 1fr); /* Maintain 5 columns on desktop */
-    grid-auto-rows: minmax(100px, auto); /* Ensure rows expand to fit content */
+  @media (min-width: ${({ theme }) => theme.breakpoints.largeTablet}) {
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: minmax(100px, auto);
   }
 `;
 
@@ -544,16 +561,16 @@ export const NewResultItem = styled(ResultItem)`
 export const InputGroupContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.medium}; /* Space between sections */
+  gap: ${({ theme }) => theme.spacing.medium};
 `;
 
 export const InputGroupSection = styled.div`
   background-color: ${({ theme }) => theme.colors.neutralLight};
   padding: ${({ theme }) => theme.spacing.medium};
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: ${({ theme }) => theme.borderRadius};
+  box-shadow: ${({ theme }) => theme.shadows.cardShadow};
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 2 columns */
+  grid-template-columns: repeat(4, 1fr);
   gap: ${({ theme }) => theme.spacing.medium};
 `;
 
@@ -564,16 +581,16 @@ export const InputGroup = styled.div`
 `;
 
 export const InputLabel = styled.label`
-  font-weight: bold;
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
   margin-bottom: ${({ theme }) => theme.spacing.small};
 `;
 
 export const NumberInput = styled.input`
   padding: ${({ theme }) => theme.spacing.small};
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius};
   border: 1px solid ${({ theme }) => theme.colors.border};
   font-size: ${({ theme }) => theme.fontSizes.medium};
-  width: 100%; /* Full width of the container */
+  width: 100%;
 `;
 
 export const HelpTextContainer = styled.div`
@@ -594,7 +611,7 @@ export const HelpText = styled.div`
   margin-left: ${({ theme }) => theme.spacing.medium};
   background-color: ${({ theme }) => theme.colors.neutralLight};
   padding: ${({ theme }) => theme.spacing.small};
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius};
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -606,14 +623,72 @@ export const HelpText = styled.div`
   }
 `;
 
-export const ResultText = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.large};
-  color: ${({ theme }) => theme.colors.text};
-  font-weight: bold;
-  margin: ${({ theme }) => theme.spacing.small} 0;
+export const AmountText = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.medium};
+  color: ${({ theme }) => theme.colors.primary};
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
 `;
 
-// Profit/Loss Indicator
+export const AmountLabel = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.medium};
+  color: ${({ theme }) => theme.colors.text};
+`;
+
+export const StatItem = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes.medium};
+  color: ${({ theme }) => theme.colors.text};
+  margin-bottom: ${({ theme }) => theme.spacing.small};
+
+  span {
+    font-weight: ${({ theme }) => theme.fontWeights.bold};
+  }
+`;
+
+export const StatTitle = styled.h4`
+  font-size: ${({ theme }) => theme.fontSizes.large};
+  color: ${({ theme }) => theme.colors.primary};
+  margin-bottom: ${({ theme }) => theme.spacing.small};
+`;
+
+export const ResultDetails = styled.div`
+  padding: ${({ theme }) => theme.spacing.medium};
+  background-color: ${({ theme }) => theme.colors.neutralLight};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  box-shadow: ${({ theme }) => theme.shadows.cardShadow};
+`;
+
+export const ResultTitle = styled.h4`
+  font-size: ${({ theme }) => theme.fontSizes.large};
+  color: ${({ theme }) => theme.colors.primary};
+  margin-bottom: ${({ theme }) => theme.spacing.small};
+`;
+
+export const ResultDescription = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.medium};
+  color: ${({ theme }) => theme.colors.text};
+  margin-bottom: ${({ theme }) => theme.spacing.medium};
+`;
+
+export const CapitalSummary = styled.div`
+  background-color: ${({ theme }) => theme.colors.neutralLight};
+  padding: ${({ theme }) => theme.spacing.medium};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  box-shadow: ${({ theme }) => theme.shadows.cardShadow};
+  margin-top: ${({ theme }) => theme.spacing.medium};
+`;
+
+export const SummaryTitle = styled.h4`
+  font-size: ${({ theme }) => theme.fontSizes.large};
+  color: ${({ theme }) => theme.colors.primary};
+  margin-bottom: ${({ theme }) => theme.spacing.small};
+`;
+
+export const SummaryText = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.medium};
+  color: ${({ theme }) => theme.colors.text};
+  margin-bottom: ${({ theme }) => theme.spacing.medium};
+`;
+
 export const ProfitLossIndicator = styled.span<{ $profit: boolean }>`
   color: ${({ theme, $profit }) => ($profit ? theme.colors.green : theme.colors.red)};
   font-size: ${({ theme }) => theme.fontSizes.large};

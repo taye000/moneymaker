@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import { Theme } from './theme';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -8,7 +7,10 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  body {
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
     font-family: 'Arial', sans-serif;
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};

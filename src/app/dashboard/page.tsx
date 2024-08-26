@@ -237,7 +237,7 @@ const Dashboard: React.FC = () => {
                                 <h4>Result: {res.result.toFixed(2)}</h4>
                                 <p>
                                     <ProfitLossIndicator $profit={res.profitLoss >= 0}>
-                                        {res.profitLoss >= 0 ? '+' : '-'}${Math.abs(res.profitLoss).toFixed(2)}
+                                        {res.profitLoss >= 0 ? ' +' : ' -'}${Math.abs(res.profitLoss).toFixed(2)}
                                     </ProfitLossIndicator>
                                 </p>
                             </ResultItem>
