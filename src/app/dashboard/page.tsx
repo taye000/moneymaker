@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { CapitalCard, Section, CardTitle, CardValue, ProfitLossIndicator, Button, Container, DashboardContainer, InputGroup, InputGroupContainer, InputLabel, NewResultItem, NumberInput, ResultCard, ResultItem, Title, ColumnContainer, BoldValue, HelpText, InputGroupSection, HelpIcon, HelpTextContainer } from '../styled';
 import { FaDollarSign, FaChartLine, FaChartPie, FaBullseye, FaExclamationCircle, FaInfoCircle } from 'react-icons/fa';
+import ResetIcon from '../../../public/reset.svg';
 
 const Dashboard: React.FC = () => {
     const [initialCapital, setInitialCapital] = useState<number>(0);
@@ -91,6 +92,20 @@ const Dashboard: React.FC = () => {
 
         // Add the result to the list of results
         setResults([{ result, profitLoss }, ...results].slice(0, 50)); // Keep only the 50 most recent results
+    };
+
+    // Reset all state values to their initial defaults
+    const handleReset = () => {
+        setInitialCapital(0);
+        setStake(0);
+        setResult(0);
+        setBreakEven(0);
+        setCurrentCapital(0);
+        setTargetProfitPercent(0);
+        setTargetProfitAmount(0);
+        setStopLossPercent(0);
+        setStopLossAmount(0);
+        setResults([]);
     };
 
     const percentageChange = calculatePercentageChange();
@@ -245,7 +260,10 @@ const Dashboard: React.FC = () => {
                         </HelpTextContainer>
                     </InputGroupSection>
                 </InputGroupContainer>
-                <Button onClick={handleAddResult}>Add Result</Button>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                    <Button onClick={handleAddResult}>Add Result</Button>
+                    <Button onClick={handleReset}>Reset</Button>
+                </div>
                 <ResultCard>
                     {results.map((res, index) => (
                         index === 0 ? (
