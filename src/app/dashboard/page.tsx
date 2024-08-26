@@ -17,9 +17,36 @@ const Dashboard: React.FC = () => {
     const [results, setResults] = useState<{ result: number; profitLoss: number }[]>([]);
 
     useEffect(() => {
-        // Initialize current capital when initialCapital changes
         setCurrentCapital(initialCapital);
     }, [initialCapital]);
+
+    // Calculate Stop Loss Amount when Stop Loss Percent changes
+    useEffect(() => {
+        if (initialCapital > 0 && stopLossPercent > 0) {
+            setStopLossAmount((stopLossPercent / 100) * initialCapital);
+        }
+    }, [stopLossPercent]);
+
+    // Calculate Stop Loss Percent when Stop Loss Amount changes
+    useEffect(() => {
+        if (initialCapital > 0 && stopLossAmount > 0) {
+            setStopLossPercent((stopLossAmount / initialCapital) * 100);
+        }
+    }, [stopLossAmount]);
+
+    // Calculate Target Profit Amount when Target Profit Percent changes
+    useEffect(() => {
+        if (initialCapital > 0 && targetProfitPercent > 0) {
+            setTargetProfitAmount((targetProfitPercent / 100) * initialCapital);
+        }
+    }, [targetProfitPercent]);
+
+    // Calculate Target Profit Percent when Target Profit Amount changes
+    useEffect(() => {
+        if (initialCapital > 0 && targetProfitAmount > 0) {
+            setTargetProfitPercent((targetProfitAmount / initialCapital) * 100);
+        }
+    }, [targetProfitAmount]);
 
     const calculatePercentageChange = (): number => {
         if (initialCapital === 0) return 0; // Avoid division by zero
@@ -31,7 +58,7 @@ const Dashboard: React.FC = () => {
         const profitLoss = isProfit ? stake : -stake;
 
         // Update currentCapital based on profit or loss
-        setCurrentCapital(prevCapital => {
+        setCurrentCapital((prevCapital) => {
             const newCapital = prevCapital + profitLoss;
 
             // Show toast if current capital is zero or less
@@ -67,8 +94,6 @@ const Dashboard: React.FC = () => {
     };
 
     const percentageChange = calculatePercentageChange();
-
-    // Determine if the current capital is a profit or loss compared to the initial capital
     const isCapitalProfit = currentCapital >= initialCapital;
 
     return (
@@ -153,14 +178,6 @@ const Dashboard: React.FC = () => {
                             />
                         </InputGroup>
                         <InputGroup>
-                            <InputLabel>Stake per Round:</InputLabel>
-                            <NumberInput
-                                type="number"
-                                value={stake}
-                                onChange={(e) => setStake(Number(e.target.value))}
-                            />
-                        </InputGroup>
-                        <InputGroup>
                             <InputLabel>Target Profit %:</InputLabel>
                             <NumberInput
                                 type="number"
@@ -202,6 +219,14 @@ const Dashboard: React.FC = () => {
                         </InputGroup>
                     </InputGroupSection>
                     <InputGroupSection>
+                        <InputGroup>
+                            <InputLabel>Stake per Round:</InputLabel>
+                            <NumberInput
+                                type="number"
+                                value={stake}
+                                onChange={(e) => setStake(Number(e.target.value))}
+                            />
+                        </InputGroup>
                         <InputGroup>
                             <InputLabel>Result:</InputLabel>
                             <NumberInput
