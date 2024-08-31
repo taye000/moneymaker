@@ -4,8 +4,20 @@ import { toast } from 'react-hot-toast';
 import { CapitalCard, Section, CardTitle, CardValue, ProfitLossIndicator, Button, Container, DashboardContainer, InputGroup, InputGroupContainer, InputLabel, NewResultItem, NumberInput, ResultCard, ResultItem, Title, ColumnContainer, BoldValue, HelpText, InputGroupSection, HelpIcon, HelpTextContainer } from '../styled';
 import { FaDollarSign, FaChartLine, FaChartPie, FaBullseye, FaExclamationCircle, FaInfoCircle } from 'react-icons/fa';
 import ResetIcon from '../../../public/reset.svg';
+import { useAuth } from '../context/AuthContext';
+import { useRouter } from 'next/navigation';
+import withAuth from '../components/withAuth';
 
 const Dashboard: React.FC = () => {
+    const { user, isAuthenticated } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            router.push('/auth/login');
+        }
+    }, [isAuthenticated, router]);
+
     const [initialCapital, setInitialCapital] = useState<number>(0);
     const [stake, setStake] = useState<number>(0);
     const [result, setResult] = useState<number>(0);
@@ -26,28 +38,29 @@ const Dashboard: React.FC = () => {
         if (initialCapital > 0 && stopLossPercent > 0) {
             setStopLossAmount((stopLossPercent / 100) * initialCapital);
         }
-    }, [stopLossPercent]);
+    }, [stopLossPercent, initialCapital]);
 
     // Calculate Stop Loss Percent when Stop Loss Amount changes
     useEffect(() => {
         if (initialCapital > 0 && stopLossAmount > 0) {
             setStopLossPercent((stopLossAmount / initialCapital) * 100);
         }
-    }, [stopLossAmount]);
+    }, [stopLossAmount, initialCapital]);
 
     // Calculate Target Profit Amount when Target Profit Percent changes
     useEffect(() => {
         if (initialCapital > 0 && targetProfitPercent > 0) {
             setTargetProfitAmount((targetProfitPercent / 100) * initialCapital);
         }
-    }, [targetProfitPercent]);
+    }, [targetProfitPercent, initialCapital]);
 
     // Calculate Target Profit Percent when Target Profit Amount changes
     useEffect(() => {
         if (initialCapital > 0 && targetProfitAmount > 0) {
             setTargetProfitPercent((targetProfitAmount / initialCapital) * 100);
         }
-    }, [targetProfitAmount]);
+    }, [targetProfitAmount, initialCapital]);
+
 
     const calculatePercentageChange = (): number => {
         if (initialCapital === 0) return 0; // Avoid division by zero
@@ -113,6 +126,11 @@ const Dashboard: React.FC = () => {
 
     return (
         <Container>
+            {isAuthenticated && user && (
+                <div style={{ marginBottom: '20px' }}>
+                    <h2>Welcome, {user.name}!</h2>
+                </div>
+            )}
             <Title>Dashboard</Title>
             <DashboardContainer>
                 <CapitalCard>
@@ -292,4 +310,4 @@ const Dashboard: React.FC = () => {
     );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);

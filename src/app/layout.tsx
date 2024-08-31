@@ -5,7 +5,7 @@ import GlobalStyle from './GlobalStyles';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { Toaster } from 'react-hot-toast';
-import { ContentWrapper } from './styled';
+import { AuthProvider } from './context/AuthContext';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,9 +14,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
-          <Navbar />
-          {children}
-          <Footer />
+          <AuthProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </AuthProvider>
         </ThemeProvider>
         <Toaster
           position="top-center"
