@@ -1,5 +1,5 @@
-"use client";
 import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 import {
     NavbarContainer,
     Logo,
@@ -8,15 +8,24 @@ import {
     AuthButton,
     MobileMenuButton,
     MobileNavLinks,
+    ProfileMenu,
+    ProfileButton,
+    DropdownMenu,
+    DropdownItem
 } from '../styled';
-import { useAuth } from '../context/AuthContext';
+import { FaUserCircle } from 'react-icons/fa';
 
 const Navbar = () => {
-    const { isAuthenticated, logout } = useAuth();
+    const { isAuthenticated, user, logout } = useAuth();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    const toggleProfileMenu = () => {
+        setIsProfileMenuOpen(!isProfileMenuOpen);
     };
 
     const handleLogout = async () => {
@@ -36,7 +45,17 @@ const Navbar = () => {
                 <NavLink href="/about">About</NavLink>
                 <NavLink href="/dashboard">Dashboard</NavLink>
                 {isAuthenticated ? (
-                    <AuthButton onClick={handleLogout}>Logout</AuthButton>
+                    <ProfileMenu>
+                        <ProfileButton onClick={toggleProfileMenu}>
+                            <FaUserCircle size={24} /> {user?.name}
+                        </ProfileButton>
+                        {isProfileMenuOpen && (
+                            <DropdownMenu>
+                                <DropdownItem href="/profile">Profile</DropdownItem>
+                                <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+                            </DropdownMenu>
+                        )}
+                    </ProfileMenu>
                 ) : (
                     <AuthButton href="/auth/login">Login</AuthButton>
                 )}
@@ -50,7 +69,17 @@ const Navbar = () => {
                     <NavLink href="/about">About</NavLink>
                     <NavLink href="/dashboard">Dashboard</NavLink>
                     {isAuthenticated ? (
-                        <AuthButton onClick={handleLogout}>Logout</AuthButton>
+                        <ProfileMenu>
+                            <ProfileButton onClick={toggleProfileMenu}>
+                                <FaUserCircle size={24} /> {user?.name}
+                            </ProfileButton>
+                            {isProfileMenuOpen && (
+                                <DropdownMenu>
+                                    <DropdownItem href="/profile">Profile</DropdownItem>
+                                    <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+                                </DropdownMenu>
+                            )}
+                        </ProfileMenu>
                     ) : (
                         <AuthButton href="/auth/login">Login</AuthButton>
                     )}

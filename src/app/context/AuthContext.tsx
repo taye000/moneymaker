@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
+import Loader from '../components/Loading';
 
 interface AuthContextProps {
     user: any;
@@ -20,24 +21,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         const fetchUser = async () => {
             try {
                 const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
-                console.log('Fetched token:', token);
 
                 if (token) {
-                    console.log('Token found, fetching user...');
                     const response = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
-                    console.log('Response status:', response.status);
                     const data = await response.json();
-                    console.log('Fetched user data:', data);
 
                     if (response.ok) {
                         setUser(data.user);
-                        console.log('User set:', data.user);
                     } else {
                         console.error('Failed to fetch user:', data.message);
                         setUser(null);
                     }
                 } else {
-                    console.log('No token found');
                     setUser(null);
                 }
             } catch (error) {
@@ -45,7 +40,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 setUser(null);
             } finally {
                 setLoading(false);
-                console.log('Loading complete');
             }
         };
 
@@ -53,21 +47,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }, []);
 
     const login = (token: string) => {
-        console.log('Logging in with token:', token);
         document.cookie = `token=${token}; Path=/;`;
         router.push('/dashboard');
     };
 
     const logout = () => {
-        console.log('Logging out');
         document.cookie = 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;';
         setUser(null);
-        router.push('/auth/login');
+        router.push('/');
     };
 
     return (
         <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, logout, loading }}>
-            {loading ? <p>Loading...</p> : children}
+            {loading ? <Loader /> : children}
         </AuthContext.Provider>
     );
 };

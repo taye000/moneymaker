@@ -1,8 +1,16 @@
+"use client";
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation'; // Import useRouter from next/router
 import { Container, ContentWrapper, Button, Title } from '../styled';
 
 const Hero: React.FC = () => {
+    const router = useRouter();
+
+    const handleGetStartedClick = () => {
+        router.push('/auth/login');
+    };
+
     return (
         <Container as="section">
             <ContentWrapper>
@@ -11,7 +19,7 @@ const Hero: React.FC = () => {
                     <p>
                         Track your trades, profits, losses, and targets all in one place. Whether you’re involved in official trading or unofficial gambling, Moneymakers is here to help you stay on top of your game.
                     </p>
-                    <Button>Get Started</Button>
+                    <Button onClick={handleGetStartedClick}>Get Started</Button>
                 </div>
                 <div style={{ marginTop: '2rem' }}> {/* Optional inline style for spacing */}
                     <Image

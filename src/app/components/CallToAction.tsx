@@ -1,11 +1,19 @@
+"use client";
 import React from 'react';
 import { Button } from '../styled';
+import { useRouter } from 'next/navigation';
 
 const CallToAction: React.FC = () => {
+    const router = useRouter();
+
+    const handleGetStartedClick = () => {
+        router.push('/auth/login');
+    };
+
     return (
         <section>
             <h2>Get Started Today</h2>
-            <Button>Sign Up Now</Button>
+            <Button onClick={handleGetStartedClick}>Sign Up Now</Button>
         </section>
     );
 };

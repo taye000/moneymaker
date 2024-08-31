@@ -4,12 +4,10 @@ import connectToDatabase from "@/app/lib/mongodb";
 import User from "@/app/models/User";
 
 const SECRET_KEY = process.env.JWT_SECRET || "your_jwt_secret_key";
-console.log("secret key", SECRET_KEY);
 
 export async function GET(request: Request) {
   // Retrieve and parse the token from the Authorization header
   const token = request.headers.get("Authorization")?.replace("Bearer ", "");
-  console.log("token in api/auth/me route", token);
 
   if (!token) {
     return NextResponse.json(
@@ -20,7 +18,6 @@ export async function GET(request: Request) {
 
   try {
     const decoded = jwt.verify(token, SECRET_KEY) as { userId: string };
-    console.log("decoded", decoded);
 
     await connectToDatabase();
 

@@ -13,9 +13,7 @@ const Dashboard: React.FC = () => {
     const router = useRouter();
 
     useEffect(() => {
-        console.log('Checking authentication status:', isAuthenticated);
         if (!isAuthenticated) {
-            console.log('User is not authenticated, redirecting to login...');
             router.push('/auth/login');
         }
     }, [isAuthenticated, router]);
@@ -127,12 +125,12 @@ const Dashboard: React.FC = () => {
 
     return (
         <Container>
+            <Title>Dashboard</Title>
             {isAuthenticated && user && (
                 <div style={{ marginBottom: '20px' }}>
                     <h2>Welcome, {user.name}!</h2>
                 </div>
             )}
-            <Title>Dashboard</Title>
             <DashboardContainer>
                 <CapitalCard>
                     <ColumnContainer>
