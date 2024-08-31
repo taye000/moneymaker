@@ -23,7 +23,7 @@ const Navbar = () => {
                 <NavLink href="/stats">Stats</NavLink>
                 <NavLink href="/about">About</NavLink>
                 <NavLink href="/dashboard">Dashboard</NavLink>
-                <AuthButton>Login</AuthButton>
+                <AuthButton href="/auth/login">Login</AuthButton>
             </NavLinks>
             <MobileMenuButton onClick={toggleMobileMenu}>
                 ☰
@@ -33,7 +33,7 @@ const Navbar = () => {
                     <NavLink href="/stats">Stats</NavLink>
                     <NavLink href="/about">About</NavLink>
                     <NavLink href="/dashboard">Dashboard</NavLink>
-                    <AuthButton>Login</AuthButton>
+                    <AuthButton href="/auth/login">Login</AuthButton>
                 </MobileNavLinks>
             )}
         </NavbarContainer>

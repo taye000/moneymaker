@@ -148,6 +148,16 @@ export const IconButton = styled(Button)`
   }
 `;
 
+export const Form = styled.form`
+  width: 100%;
+  max-width: 400px; /* Adjust this value to your desired max-width */
+  margin: 0 auto;
+  padding: ${({ theme }) => theme.spacing.medium};
+  background-color: ${({ theme }) => theme.colors.formBackground};
+  border-radius: ${({ theme }) => theme.spacing.small};
+  box-shadow: ${({ theme }) => theme.shadows.medium};
+`;
+
 export const SmallCard = styled(Card)`
   width: 100px;
   padding: ${({ theme }) => theme.spacing.small};
@@ -227,7 +237,7 @@ export const NavLink = styled.a`
   }
 `;
 
-export const AuthButton = styled.button`
+export const AuthButton = styled.a`
   background-color: ${({ theme }) => theme.colors.highlight};
   color: ${({ theme }) => theme.colors.textOnHighlight};
   font-size: ${({ theme }) => theme.fontSizes.medium};
