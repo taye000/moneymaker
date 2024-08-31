@@ -1,5 +1,4 @@
 import { ClipLoader } from 'react-spinners';
-import { LoaderWrapper } from '../styled';
 import { theme } from '../theme';
 
 const Loader: React.FC = () => {
