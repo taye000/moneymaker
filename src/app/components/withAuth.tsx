@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import Loader from './Loading';
 
 const withAuth = (WrappedComponent: React.FC) => {
-    return (props: any) => {
+    const WithAuthComponent: React.FC<any> = (props) => {
         const { isAuthenticated, loading } = useAuth();
         const router = useRouter();
 
@@ -15,11 +15,15 @@ const withAuth = (WrappedComponent: React.FC) => {
         }, [isAuthenticated, loading, router]);
 
         if (loading) {
-            return <Loader/>;
+            return <Loader />;
         }
 
         return <WrappedComponent {...props} />;
     };
+
+    WithAuthComponent.displayName = `WithAuth(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
+
+    return WithAuthComponent;
 };
 
 export default withAuth;

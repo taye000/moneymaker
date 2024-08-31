@@ -1,8 +1,11 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
-const logout = (req: NextApiRequest, res: NextApiResponse) => {
-  res.setHeader("Set-Cookie", "token=; Path=/; Max-Age=0");
-  res.status(200).json({ message: "Logged out successfully" });
-};
+export async function GET() {
+  const response = NextResponse.json({ message: "Logged out successfully" });
+  response.cookies.set("token", "", {
+    path: "/",
+    maxAge: 0,
+  });
 
-export default logout;
+  return response;
+}

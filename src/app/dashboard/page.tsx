@@ -38,28 +38,29 @@ const Dashboard: React.FC = () => {
         if (initialCapital > 0 && stopLossPercent > 0) {
             setStopLossAmount((stopLossPercent / 100) * initialCapital);
         }
-    }, [stopLossPercent]);
+    }, [stopLossPercent, initialCapital]);
 
     // Calculate Stop Loss Percent when Stop Loss Amount changes
     useEffect(() => {
         if (initialCapital > 0 && stopLossAmount > 0) {
             setStopLossPercent((stopLossAmount / initialCapital) * 100);
         }
-    }, [stopLossAmount]);
+    }, [stopLossAmount, initialCapital]);
 
     // Calculate Target Profit Amount when Target Profit Percent changes
     useEffect(() => {
         if (initialCapital > 0 && targetProfitPercent > 0) {
             setTargetProfitAmount((targetProfitPercent / 100) * initialCapital);
         }
-    }, [targetProfitPercent]);
+    }, [targetProfitPercent, initialCapital]);
 
     // Calculate Target Profit Percent when Target Profit Amount changes
     useEffect(() => {
         if (initialCapital > 0 && targetProfitAmount > 0) {
             setTargetProfitPercent((targetProfitAmount / initialCapital) * 100);
         }
-    }, [targetProfitAmount]);
+    }, [targetProfitAmount, initialCapital]);
+
 
     const calculatePercentageChange = (): number => {
         if (initialCapital === 0) return 0; // Avoid division by zero
