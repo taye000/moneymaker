@@ -125,12 +125,12 @@ const Dashboard: React.FC = () => {
 
     return (
         <Container>
-            <Title>Dashboard</Title>
             {isAuthenticated && user && (
                 <div style={{ marginBottom: '20px' }}>
                     <h2>Welcome, {user.name}!</h2>
                 </div>
             )}
+            <Title>Dashboard</Title>
             <DashboardContainer>
                 <CapitalCard>
                     <ColumnContainer>

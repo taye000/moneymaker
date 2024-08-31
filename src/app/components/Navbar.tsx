@@ -43,7 +43,7 @@ const Navbar = () => {
             <NavLinks>
                 <NavLink href="/stats">Stats</NavLink>
                 <NavLink href="/about">About</NavLink>
-                <NavLink href="/dashboard">Dashboard</NavLink>
+                {isAuthenticated && <NavLink href="/dashboard">Dashboard</NavLink>}
                 {isAuthenticated ? (
                     <ProfileMenu>
                         <ProfileButton onClick={toggleProfileMenu}>
@@ -67,7 +67,7 @@ const Navbar = () => {
                 <MobileNavLinks>
                     <NavLink href="/stats">Stats</NavLink>
                     <NavLink href="/about">About</NavLink>
-                    <NavLink href="/dashboard">Dashboard</NavLink>
+                    {isAuthenticated && <NavLink href="/dashboard">Dashboard</NavLink>}
                     {isAuthenticated ? (
                         <ProfileMenu>
                             <ProfileButton onClick={toggleProfileMenu}>

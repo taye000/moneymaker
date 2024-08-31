@@ -46,9 +46,23 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         fetchUser();
     }, []);
 
-    const login = (token: string) => {
+    const login = async (token: string) => {
         document.cookie = `token=${token}; Path=/;`;
-        router.push('/dashboard');
+        try {
+            // Fetch user data after login to ensure state is updated
+            const response = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
+            const data = await response.json();
+            if (response.ok) {
+                setUser(data.user);
+                router.push('/dashboard');
+            } else {
+                console.error('Failed to fetch user:', data.message);
+                setUser(null);
+            }
+        } catch (error) {
+            console.error('Error fetching user:', error);
+            setUser(null);
+        }
     };
 
     const logout = () => {

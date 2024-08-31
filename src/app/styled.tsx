@@ -1,6 +1,16 @@
 "use client";
 import styled, { keyframes } from 'styled-components';
 
+export const LoaderWrapper = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+background-color: ${({ theme }) => theme.colors.background};
+color: ${({ theme }) => theme.colors.primary};
+padding: ${({ theme }) => theme.spacing.large};
+`;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
