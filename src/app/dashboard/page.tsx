@@ -4,8 +4,19 @@ import { toast } from 'react-hot-toast';
 import { CapitalCard, Section, CardTitle, CardValue, ProfitLossIndicator, Button, Container, DashboardContainer, InputGroup, InputGroupContainer, InputLabel, NewResultItem, NumberInput, ResultCard, ResultItem, Title, ColumnContainer, BoldValue, HelpText, InputGroupSection, HelpIcon, HelpTextContainer } from '../styled';
 import { FaDollarSign, FaChartLine, FaChartPie, FaBullseye, FaExclamationCircle, FaInfoCircle } from 'react-icons/fa';
 import ResetIcon from '../../../public/reset.svg';
+import { useAuth } from '../context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 const Dashboard: React.FC = () => {
+    const { user, isAuthenticated } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            router.push('/auth/login');
+        }
+    }, [isAuthenticated, router]);
+
     const [initialCapital, setInitialCapital] = useState<number>(0);
     const [stake, setStake] = useState<number>(0);
     const [result, setResult] = useState<number>(0);
@@ -113,6 +124,11 @@ const Dashboard: React.FC = () => {
 
     return (
         <Container>
+            {isAuthenticated && user && (
+                <div style={{ marginBottom: '20px' }}>
+                    <h2>Welcome, {user.name}!</h2>
+                </div>
+            )}
             <Title>Dashboard</Title>
             <DashboardContainer>
                 <CapitalCard>

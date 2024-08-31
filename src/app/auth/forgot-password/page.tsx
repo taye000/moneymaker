@@ -1,3 +1,4 @@
+"use client";
 import { Container, ContentWrapper, Header, Form, Label, Input, Button } from '@/app/styled';
 import React from 'react';
 
@@ -12,7 +13,7 @@ const ResetPasswordPage: React.FC = () => {
                     <Label htmlFor="email">Email</Label>
                     <Input type="email" id="email" name="email" required />
 
-                    <Button type="submit">Send Reset Link</Button>
+                    <Button type="submit">Send Recovery Code</Button>
                 </Form>
             </ContentWrapper>
         </Container>
