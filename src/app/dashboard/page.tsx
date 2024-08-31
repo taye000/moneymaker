@@ -6,13 +6,16 @@ import { FaDollarSign, FaChartLine, FaChartPie, FaBullseye, FaExclamationCircle,
 import ResetIcon from '../../../public/reset.svg';
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
+import withAuth from '../components/withAuth';
 
 const Dashboard: React.FC = () => {
     const { user, isAuthenticated } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
+        console.log('Checking authentication status:', isAuthenticated);
         if (!isAuthenticated) {
+            console.log('User is not authenticated, redirecting to login...');
             router.push('/auth/login');
         }
     }, [isAuthenticated, router]);
@@ -308,4 +311,4 @@ const Dashboard: React.FC = () => {
     );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);

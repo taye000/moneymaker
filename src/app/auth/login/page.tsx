@@ -1,30 +1,34 @@
 "use client";
 import { Container, ContentWrapper, Header, Form, Label, Input, Button, AuthButton } from '@/app/styled';
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { useAuth } from '@/app/context/AuthContext';
 
 const LoginPage: React.FC = () => {
+    const { login } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const res = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
-        });
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
 
-        const data = await res.json();
+            const data = await res.json();
 
-        if (res.ok) {
-            // Store the JWT in a cookie
-            document.cookie = `token=${data.token}; Path=/; HttpOnly; Secure;`;
-            router.push('/dashboard');
-        } else {
-            alert(data.message);
+            if (res.ok) {
+                login(data.token);
+                toast.success('Login successful! Redirecting to dashboard...');
+            } else {
+                toast.error(data.message || 'Login failed.');
+            }
+        } catch (error) {
+            toast.error('An error occurred during login.');
         }
     };
 

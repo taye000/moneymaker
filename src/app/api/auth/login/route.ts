@@ -4,7 +4,8 @@ import User from "@/app/models/User";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 
-const JWT_SECRET = process.env.JWT_SECRET || "";
+const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key";
+console.log("secret key", JWT_SECRET);
 
 export async function POST(request: Request) {
   await connectToDatabase();

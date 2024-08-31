@@ -1,4 +1,3 @@
-// app/context/AuthContext.tsx
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -18,31 +17,49 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const router = useRouter();
 
     useEffect(() => {
-        // Check for user token and set authentication state on mount
-        const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+        const fetchUser = async () => {
+            try {
+                const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+                console.log('Fetched token:', token);
 
-        if (token) {
-            fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } })
-                .then(response => response.json())
-                .then(data => {
-                    setUser(data.user);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    setLoading(false);
-                });
-        } else {
-            setLoading(false);
-        }
+                if (token) {
+                    console.log('Token found, fetching user...');
+                    const response = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
+                    console.log('Response status:', response.status);
+                    const data = await response.json();
+                    console.log('Fetched user data:', data);
+
+                    if (response.ok) {
+                        setUser(data.user);
+                        console.log('User set:', data.user);
+                    } else {
+                        console.error('Failed to fetch user:', data.message);
+                        setUser(null);
+                    }
+                } else {
+                    console.log('No token found');
+                    setUser(null);
+                }
+            } catch (error) {
+                console.error('Error fetching user:', error);
+                setUser(null);
+            } finally {
+                setLoading(false);
+                console.log('Loading complete');
+            }
+        };
+
+        fetchUser();
     }, []);
 
     const login = (token: string) => {
-        document.cookie = `token=${token}; Path=/; HttpOnly; Secure;`;
-        // Fetch and set user details
+        console.log('Logging in with token:', token);
+        document.cookie = `token=${token}; Path=/;`;
         router.push('/dashboard');
     };
 
     const logout = () => {
+        console.log('Logging out');
         document.cookie = 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;';
         setUser(null);
         router.push('/auth/login');
