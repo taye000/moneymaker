@@ -5,18 +5,27 @@ export const ProfileCard = styled.div`
     display: flex;
     align-items: center;
     background-color: ${({ theme }) => theme.colors.background};
-    padding: ${({ theme }) => theme.spacing.medium};
+    padding: ${({ theme }) => theme.spacing.large};
     border-radius: ${({ theme }) => theme.borderRadius};
     box-shadow: ${({ theme }) => theme.shadows.cardShadow};
     margin-top: ${({ theme }) => theme.spacing.large};
+    width: 100%;
+    max-width: 500px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: ${({ theme }) => theme.shadows.cardShadow} 0 10px 20px;
+    }
 `;
 
 export const ProfilePhoto = styled.img`
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: ${({ theme }) => theme.spacing.medium};
+    margin-right: ${({ theme }) => theme.spacing.large};
+    border: 3px solid ${({ theme }) => theme.colors.primary};
 `;
 
 export const ProfileInfo = styled.div`
@@ -28,12 +37,13 @@ export const ProfileInfo = styled.div`
         margin: 0;
         color: ${({ theme }) => theme.colors.text};
         font-size: ${({ theme }) => theme.fontSizes.large};
+        margin-bottom: ${({ theme }) => theme.spacing.small};
     }
 
     p {
         color: ${({ theme }) => theme.colors.textSecondary};
         font-size: ${({ theme }) => theme.fontSizes.medium};
-        margin: ${({ theme }) => theme.spacing.small} 0;
+        margin: 0;
     }
 `;
 
