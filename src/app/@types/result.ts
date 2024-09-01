@@ -7,6 +7,7 @@ export interface IResultData {
   result: number;
   breakEven: number;
   currentCapital: number;
+  profitLoss: number;
   targetProfitPercent?: number;
   targetProfitAmount?: number;
   stopLossPercent?: number;
