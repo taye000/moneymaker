@@ -1,8 +1,8 @@
 "use client";
+import { FaTrash } from 'react-icons/fa';
 import styled, { keyframes } from 'styled-components';
 
 export const Button = styled.button`
-  width: 100%;
   padding: ${({ theme }) => theme.spacing.small} ${({ theme }) => theme.spacing.medium};
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.textOnPrimary};
@@ -10,13 +10,15 @@ export const Button = styled.button`
   border-radius: ${({ theme }) => theme.borderRadius};
   cursor: pointer;
   margin-top: ${({ theme }) => theme.spacing.medium};
+  display: inline-block;
+  text-align: center;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryHover};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: auto; // Allow the button to shrink on smaller screens
+    width: auto;
   }
 `;
 
@@ -118,7 +120,7 @@ const fadeIn = keyframes`
 
 export const ResultCard = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr); /* Default to 6 columns */
   grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
   gap: ${({ theme }) => theme.spacing.small};
   background-color: ${({ theme }) => theme.colors.neutralLight};
@@ -127,29 +129,33 @@ export const ResultCard = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.cardShadow};
   margin-top: ${({ theme }) => theme.spacing.medium};
   overflow-y: auto;
+  overflow-x: hidden;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.smallTablet}) {
-    grid-template-columns: repeat(5, 1fr);
-    grid-auto-rows: minmax(100px, auto);
+  @media (max-width: ${({ theme }) => theme.breakpoints.largeTablet}) {
+    max-height: calc(8 * 100px); 
+    grid-template-columns: repeat(4, 1fr);
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.largeTablet}) {
-    grid-template-columns: repeat(5, 1fr);
-    grid-auto-rows: minmax(100px, auto);
+  @media (max-width: ${({ theme }) => theme.breakpoints.mediumTablet}) {
+    max-height: calc(6 * 100px);
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    max-height: calc(5 * 100px); 
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 
 export const ResultItem = styled.div`
-  h4 {
-    color: ${({ theme }) => theme.colors.text};
-    margin: 0;
-    font-size: ${({ theme }) => theme.fontSizes.small};
-  }
-
-  p {
-    margin: 0;
-    font-size: ${({ theme }) => theme.fontSizes.small};
-  }
+  display: flex;
+  align-items: center;
+  padding: ${({ theme }) => theme.spacing.medium};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  background-color: ${({ theme }) => theme.colors.background};
+  position: relative;
+  animation: ${fadeIn} 0.5s ease-out;
 `;
 
 export const NewResultItem = styled(ResultItem)`
@@ -296,4 +302,47 @@ export const ProfitLossIndicator = styled.span<{ $profit: boolean }>`
 export const ProfitLossCard = styled(DashboardCard)`
   background-color: ${({ theme }) => theme.colors.background};
   border: 1px solid ${({ theme }) => theme.colors.border};
+`;
+
+export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+  margin-bottom: ${({ theme }) => theme.spacing.small};
+  cursor: pointer;
+`;
+
+export const TrashIcon = styled(FaTrash)`
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.danger};
+  margin-top: ${({ theme }) => theme.spacing.small};
+  &:hover {
+    color: ${({ theme }) => theme.colors.dangerHover};
+  }
+`;
+
+export const DeleteButton = styled(Button)`
+  background-color: ${({ theme }) => theme.colors.danger};
+  color: ${({ theme }) => theme.colors.white};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.dangerHover};
+  }
+`;
+
+export const ResultItemContent = styled.div`
+  flex: 1;
+`;
+
+export const ResultItemActions = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const NoResultsMessage = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.medium};
+  color: ${({ theme }) => theme.colors.textSecondary};
+  margin-top: ${({ theme }) => theme.spacing.large};
+  text-align: center;
+  background-color: ${({ theme }) => theme.colors.neutralLight};
+  padding: ${({ theme }) => theme.spacing.medium};
+  border-radius: ${({ theme }) => theme.borderRadius};
 `;
