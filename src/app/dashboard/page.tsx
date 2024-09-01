@@ -412,21 +412,24 @@ const Dashboard: React.FC = () => {
                         </HelpTextContainer>
                     </InputGroupSection>
                 </InputGroupContainer>
-                <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                <div style={{ display: 'flex', gap: '10px', marginBottom: '10px', justifyContent: 'center' }}>
                     <Button onClick={handleAddResult}>Add Result</Button>
                     <Button onClick={handleReset}>Reset</Button>
                 </div>
                 <div>
-                    {selectedResults.size > 0 && (
-                        <DeleteButton onClick={handleDeleteAll}>
-                            Delete All Results
-                        </DeleteButton>
-                    )}
-                    {selectedResults.size > 0 && (
-                        <DeleteButton onClick={handleDeleteSelected}>
-                            Delete Selected Results
-                        </DeleteButton>
-                    )}
+                    <Title>Results</Title>
+                    <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                        {results.length > 0 && (
+                            <DeleteButton onClick={handleDeleteAll}>
+                                Delete All Results
+                            </DeleteButton>
+                        )}
+                        {selectedResults.size > 0 && (
+                            <DeleteButton onClick={handleDeleteSelected}>
+                                Delete Selected Results
+                            </DeleteButton>
+                        )}
+                    </div>
                     {results.length === 0 ? (
                         <NoResultsMessage>
                             Oh no! It looks like the results took a vacation. Let's bring them back with some fresh data!
@@ -455,7 +458,6 @@ const Dashboard: React.FC = () => {
                         </ResultCard>
                     )}
                 </div>
-
             </DashboardContainer>
         </Container>
     );

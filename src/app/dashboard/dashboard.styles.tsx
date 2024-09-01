@@ -3,7 +3,6 @@ import { FaTrash } from 'react-icons/fa';
 import styled, { keyframes } from 'styled-components';
 
 export const Button = styled.button`
-  width: 100%;
   padding: ${({ theme }) => theme.spacing.small} ${({ theme }) => theme.spacing.medium};
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.textOnPrimary};
@@ -11,13 +10,15 @@ export const Button = styled.button`
   border-radius: ${({ theme }) => theme.borderRadius};
   cursor: pointer;
   margin-top: ${({ theme }) => theme.spacing.medium};
+  display: inline-block;
+  text-align: center;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primaryHover};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: auto; // Allow the button to shrink on smaller screens
+    width: auto;
   }
 `;
 
@@ -298,14 +299,14 @@ export const ProfitLossCard = styled(DashboardCard)`
 `;
 
 export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
-  margin-right: ${({ theme }) => theme.spacing.small};
+  margin-bottom: ${({ theme }) => theme.spacing.small};
   cursor: pointer;
 `;
 
 export const TrashIcon = styled(FaTrash)`
   cursor: pointer;
   color: ${({ theme }) => theme.colors.danger};
-  margin-left: ${({ theme }) => theme.spacing.small};
+  margin-top: ${({ theme }) => theme.spacing.small};
   &:hover {
     color: ${({ theme }) => theme.colors.dangerHover};
   }
@@ -314,6 +315,7 @@ export const TrashIcon = styled(FaTrash)`
 export const DeleteButton = styled(Button)`
   background-color: ${({ theme }) => theme.colors.danger};
   color: ${({ theme }) => theme.colors.white};
+
   &:hover {
     background-color: ${({ theme }) => theme.colors.dangerHover};
   }
@@ -325,6 +327,7 @@ export const ResultItemContent = styled.div`
 
 export const ResultItemActions = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
 `;
 
