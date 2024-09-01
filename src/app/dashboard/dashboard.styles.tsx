@@ -1,4 +1,5 @@
 "use client";
+import { FaTrash } from 'react-icons/fa';
 import styled, { keyframes } from 'styled-components';
 
 export const Button = styled.button`
@@ -140,16 +141,14 @@ export const ResultCard = styled.div`
 `;
 
 export const ResultItem = styled.div`
-  h4 {
-    color: ${({ theme }) => theme.colors.text};
-    margin: 0;
-    font-size: ${({ theme }) => theme.fontSizes.small};
-  }
-
-  p {
-    margin: 0;
-    font-size: ${({ theme }) => theme.fontSizes.small};
-  }
+  display: flex;
+  align-items: center;
+  padding: ${({ theme }) => theme.spacing.medium};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  background-color: ${({ theme }) => theme.colors.background};
+  position: relative;
+  animation: ${fadeIn} 0.5s ease-out;
 `;
 
 export const NewResultItem = styled(ResultItem)`
@@ -296,4 +295,45 @@ export const ProfitLossIndicator = styled.span<{ $profit: boolean }>`
 export const ProfitLossCard = styled(DashboardCard)`
   background-color: ${({ theme }) => theme.colors.background};
   border: 1px solid ${({ theme }) => theme.colors.border};
+`;
+
+export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+  margin-right: ${({ theme }) => theme.spacing.small};
+  cursor: pointer;
+`;
+
+export const TrashIcon = styled(FaTrash)`
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.danger};
+  margin-left: ${({ theme }) => theme.spacing.small};
+  &:hover {
+    color: ${({ theme }) => theme.colors.dangerHover};
+  }
+`;
+
+export const DeleteButton = styled(Button)`
+  background-color: ${({ theme }) => theme.colors.danger};
+  color: ${({ theme }) => theme.colors.white};
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.dangerHover};
+  }
+`;
+
+export const ResultItemContent = styled.div`
+  flex: 1;
+`;
+
+export const ResultItemActions = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const NoResultsMessage = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.medium};
+  color: ${({ theme }) => theme.colors.textSecondary};
+  margin-top: ${({ theme }) => theme.spacing.large};
+  text-align: center;
+  background-color: ${({ theme }) => theme.colors.neutralLight};
+  padding: ${({ theme }) => theme.spacing.medium};
+  border-radius: ${({ theme }) => theme.borderRadius};
 `;

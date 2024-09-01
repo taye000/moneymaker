@@ -26,8 +26,14 @@ export async function POST(request: Request) {
     const data: IResultData = await request.json();
     const newResult = new ResultData(data);
     await newResult.save();
+
+    // Return the result with the generated ID
     return NextResponse.json(
-      { message: "Result saved successfully" },
+      {
+        message: "Result saved successfully",
+        id: newResult._id,
+        result: newResult,
+      },
       { status: 201 }
     );
   } catch (error) {
@@ -40,6 +46,7 @@ export async function POST(request: Request) {
 
 // DELETE /api/results
 export async function DELETE() {
+  console.log("DELETE /api/results endpoint hit");
   await connectToDatabase();
 
   try {

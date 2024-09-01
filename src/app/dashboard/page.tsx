@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import withAuth from '../components/withAuth';
 import { Title } from '../styled';
-import { Container, Button, DashboardContainer, CapitalCard, ColumnContainer, Section, CardTitle, CardValue, ProfitLossIndicator, BoldValue, InputGroupContainer, InputGroupSection, InputGroup, InputLabel, NumberInput, HelpTextContainer, HelpIcon, HelpText, ResultCard, NewResultItem, ResultItem } from './dashboard.styles';
+import { Container, Button, DashboardContainer, CapitalCard, ColumnContainer, Section, CardTitle, CardValue, ProfitLossIndicator, BoldValue, InputGroupContainer, InputGroupSection, InputGroup, InputLabel, NumberInput, HelpTextContainer, HelpIcon, HelpText, ResultCard, NewResultItem, ResultItem, Checkbox, DeleteButton, ResultItemContent, ResultItemActions, TrashIcon, NoResultsMessage } from './dashboard.styles';
 
 const Dashboard: React.FC = () => {
     const { user, isAuthenticated } = useAuth();
@@ -29,6 +29,7 @@ const Dashboard: React.FC = () => {
     const [stopLossPercent, setStopLossPercent] = useState<number>(0);
     const [stopLossAmount, setStopLossAmount] = useState<number>(0);
     const [results, setResults] = useState<{ result: number; profitLoss: number; id: string }[]>([]);
+    const [selectedResults, setSelectedResults] = useState<Set<string>>(new Set());
 
     useEffect(() => {
         const fetchResults = async () => {
@@ -55,19 +56,67 @@ const Dashboard: React.FC = () => {
                 method: "DELETE",
             });
             setResults(results.filter(result => result.id !== id));
+            toast.success('Result deleted successfully');
         } catch (error) {
             console.error("Failed to delete result:", error);
+            toast.error('Failed to delete result');
         }
+    };
+
+    const handleDeleteSelected = async () => {
+        try {
+            // Convert selectedResults Set to an array of IDs and join them as a comma-separated string
+            const ids = Array.from(selectedResults).join(',');
+            console.log('Deleting selected results:', ids);
+
+            // Make the DELETE request with the IDs as query parameters
+            const response = await fetch(`/api/results?ids=${ids}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                // Remove deleted results from the state
+                setResults(results.filter(result => !selectedResults.has(result.id)));
+                // Clear the selected results
+                setSelectedResults(new Set());
+                toast.success('Selected results deleted successfully');
+            } else {
+                // Handle non-OK responses
+                console.error("Failed to delete selected results:", await response.json());
+                toast.error('Failed to delete selected results');
+            }
+        } catch (error) {
+            // Handle fetch errors
+            console.error("Failed to delete selected results:", error);
+            toast.error('Failed to delete selected results');
+        }
+    };
+
+
+    const handleCheckboxChange = (id: string) => {
+        setSelectedResults((prev) => {
+            const newSet = new Set(prev);
+            if (newSet.has(id)) {
+                newSet.delete(id);
+            } else {
+                newSet.add(id);
+            }
+            console.log('Checkbox toggled:', id);  // Log the id when checkbox is pressed
+            console.log('Selected Results:', Array.from(newSet));  // Log the current selected results
+            return newSet;
+        });
     };
 
     const handleDeleteAll = async () => {
         try {
-            await fetch("/api/results", {
-                method: "DELETE",
+            await fetch('/api/results', {
+                method: 'DELETE',
             });
             setResults([]);
+            toast.success('All results deleted successfully');
         } catch (error) {
             console.error("Failed to delete all results:", error);
+            toast.error('Failed to delete all results');
         }
     };
 
@@ -110,6 +159,23 @@ const Dashboard: React.FC = () => {
     };
 
     const handleAddResult = async () => {
+        if (initialCapital <= 0) {
+            toast.error('Please enter Initial Capital');
+            return;
+        }
+        if (stake <= 0) {
+            toast.error('Please enter Stake per Round');
+            return;
+        }
+        if (breakEven <= 0) {
+            toast.error('Please enter Break-Even');
+            return;
+        }
+        if (result <= 0) {
+            toast.error('Please enter Result');
+            return;
+        }
+
         const isProfit = result > breakEven;
         const profitLoss = isProfit ? stake : -stake;
 
@@ -174,6 +240,7 @@ const Dashboard: React.FC = () => {
             toast.error('Error saving result');
         }
     };
+
 
     // Reset all state values to their initial defaults
     const handleReset = () => {
@@ -349,29 +416,46 @@ const Dashboard: React.FC = () => {
                     <Button onClick={handleAddResult}>Add Result</Button>
                     <Button onClick={handleReset}>Reset</Button>
                 </div>
-                <ResultCard>
-                    {results.map((res, index) => (
-                        index === 0 ? (
-                            <NewResultItem key={index}>
-                                <h4>Result: {res.result.toFixed(2)}</h4>
-                                <p>
-                                    <ProfitLossIndicator $profit={res.profitLoss >= 0}>
-                                        {res.profitLoss >= 0 ? ' +' : ' -'}${Math.abs(res.profitLoss).toFixed(2)}
-                                    </ProfitLossIndicator>
-                                </p>
-                            </NewResultItem>
-                        ) : (
-                            <ResultItem key={index}>
-                                <h4>Result: {res.result.toFixed(2)}</h4>
-                                <p>
-                                    <ProfitLossIndicator $profit={res.profitLoss >= 0}>
-                                        {res.profitLoss >= 0 ? ' +' : ' -'}${Math.abs(res.profitLoss).toFixed(2)}
-                                    </ProfitLossIndicator>
-                                </p>
-                            </ResultItem>
-                        )
-                    ))}
-                </ResultCard>
+                <div>
+                    {selectedResults.size > 0 && (
+                        <DeleteButton onClick={handleDeleteAll}>
+                            Delete All Results
+                        </DeleteButton>
+                    )}
+                    {selectedResults.size > 0 && (
+                        <DeleteButton onClick={handleDeleteSelected}>
+                            Delete Selected Results
+                        </DeleteButton>
+                    )}
+                    {results.length === 0 ? (
+                        <NoResultsMessage>
+                            Oh no! It looks like the results took a vacation. Let's bring them back with some fresh data!
+                        </NoResultsMessage>
+                    ) : (
+                        <ResultCard>
+                            {results.map(result => (
+                                <ResultItem key={result.id}>
+                                    <ResultItemContent>
+                                        <h4>Result: {result.result.toFixed(2)}</h4>
+                                        <p>
+                                            <ProfitLossIndicator $profit={result.profitLoss >= 0}>
+                                                {result.profitLoss >= 0 ? ' +' : ' -'}${Math.abs(result.profitLoss).toFixed(2)}
+                                            </ProfitLossIndicator>
+                                        </p>
+                                    </ResultItemContent>
+                                    <ResultItemActions>
+                                        <Checkbox
+                                            checked={selectedResults.has(result.id)}
+                                            onChange={() => handleCheckboxChange(result.id)}
+                                        />
+                                        <TrashIcon onClick={() => handleDeleteResult(result.id)} />
+                                    </ResultItemActions>
+                                </ResultItem>
+                            ))}
+                        </ResultCard>
+                    )}
+                </div>
+
             </DashboardContainer>
         </Container>
     );
