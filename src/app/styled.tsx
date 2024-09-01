@@ -97,6 +97,21 @@ export const TextArea = styled.textarea`
   }
 `;
 
+export const AuthButton = styled.a`
+  background-color: ${({ theme }) => theme.colors.highlight};
+  color: ${({ theme }) => theme.colors.textOnHighlight};
+  font-size: ${({ theme }) => theme.fontSizes.medium};
+  padding: ${({ theme }) => theme.spacing.small} ${({ theme }) => theme.spacing.medium};
+  border: none;
+  border-radius: ${({ theme }) => theme.borderRadius};
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.secondary};
+  }
+`;
+
 export const Button = styled.button`
   width: 100%;
   padding: ${({ theme }) => theme.spacing.small} ${({ theme }) => theme.spacing.medium};
