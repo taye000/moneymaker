@@ -65,7 +65,7 @@ const ProfilePage: React.FC = () => {
                             <p>{user?.email}</p>
                             <Button
                                 onClick={handleLogout}
-                                style={{ marginTop: '10px', backgroundColor: '#ff4d4f' }}
+                                style={{ marginTop: '20px' }}
                             >
                                 Logout
                             </Button>

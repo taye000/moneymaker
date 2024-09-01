@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from './components.styles';
+import { Button, CTAContainer, CTAHeadline, CTAText } from './components.styles';
 
 const CallToAction: React.FC = () => {
     const router = useRouter();
@@ -11,10 +11,13 @@ const CallToAction: React.FC = () => {
     };
 
     return (
-        <section>
-            <h2>Get Started Today</h2>
+        <CTAContainer>
+            <CTAHeadline>Transform Your Trading Experience</CTAHeadline>
+            <CTAText>
+                Join Moneymakers today and start tracking your trades, profits, and losses with ease. Take control of your financial future.
+            </CTAText>
             <Button onClick={handleGetStartedClick}>Sign Up Now</Button>
-        </section>
+        </CTAContainer>
     );
 };
 

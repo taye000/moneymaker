@@ -1,9 +1,9 @@
 "use client";
 import React from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation'; // Import useRouter from next/router
+import { useRouter } from 'next/navigation';
 import { Button } from '../components.styles';
-import { Container, ContentWrapper, Title } from './Hero.styles';
+import { Container, ContentWrapper, Title, Description, ImageWrapper } from './Hero.styles';
 
 const Hero: React.FC = () => {
     const router = useRouter();
@@ -15,14 +15,14 @@ const Hero: React.FC = () => {
     return (
         <Container as="section">
             <ContentWrapper>
-                <div style={{ textAlign: 'center' }}>
+                <div>
                     <Title>Welcome to Moneymakers</Title>
-                    <p>
+                    <Description>
                         Track your trades, profits, losses, and targets all in one place. Whether you’re involved in official trading or unofficial gambling, Moneymakers is here to help you stay on top of your game.
-                    </p>
+                    </Description>
                     <Button onClick={handleGetStartedClick}>Get Started</Button>
                 </div>
-                <div style={{ marginTop: '2rem' }}>
+                <ImageWrapper>
                     <Image
                         src="/hero.jpg"
                         alt="Moneymakers Hero"
@@ -30,7 +30,7 @@ const Hero: React.FC = () => {
                         height={300}
                         layout="responsive"
                     />
-                </div>
+                </ImageWrapper>
             </ContentWrapper>
         </Container>
     );
