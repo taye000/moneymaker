@@ -28,7 +28,7 @@ const Dashboard: React.FC = () => {
     const [targetProfitAmount, setTargetProfitAmount] = useState<number>(0);
     const [stopLossPercent, setStopLossPercent] = useState<number>(0);
     const [stopLossAmount, setStopLossAmount] = useState<number>(0);
-    const [results, setResults] = useState<{ result: number; profitLoss: number }[]>([]);
+    const [results, setResults] = useState<{ result: number; profitLoss: number; id: string }[]>([]);
 
     useEffect(() => {
         const fetchResults = async () => {
@@ -37,6 +37,7 @@ const Dashboard: React.FC = () => {
                 if (!response.ok) throw new Error('Failed to fetch results');
                 const data = await response.json();
                 setResults(data.map((res: any) => ({
+                    id: res._id,
                     result: res.result,
                     profitLoss: res.profitLoss
                 })));
@@ -48,6 +49,27 @@ const Dashboard: React.FC = () => {
         fetchResults();
     }, []);
 
+    const handleDeleteResult = async (id: string) => {
+        try {
+            await fetch(`/api/results/${id}`, {
+                method: "DELETE",
+            });
+            setResults(results.filter(result => result.id !== id));
+        } catch (error) {
+            console.error("Failed to delete result:", error);
+        }
+    };
+
+    const handleDeleteAll = async () => {
+        try {
+            await fetch("/api/results", {
+                method: "DELETE",
+            });
+            setResults([]);
+        } catch (error) {
+            console.error("Failed to delete all results:", error);
+        }
+    };
 
     useEffect(() => {
         setCurrentCapital(initialCapital);
@@ -147,7 +169,7 @@ const Dashboard: React.FC = () => {
 
             const data = await response.json();
             toast.success(data.message);
-            setResults((prevResults) => [{ result, profitLoss }, ...prevResults].slice(0, 50)); // Keep only the 50 most recent results
+            setResults((prevResults) => [{ id: data.id, result, profitLoss }, ...prevResults].slice(0, 50));
         } catch (error) {
             toast.error('Error saving result');
         }
