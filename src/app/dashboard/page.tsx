@@ -31,6 +31,25 @@ const Dashboard: React.FC = () => {
     const [results, setResults] = useState<{ result: number; profitLoss: number }[]>([]);
 
     useEffect(() => {
+        const fetchResults = async () => {
+            try {
+                const response = await fetch('/api/results');
+                if (!response.ok) throw new Error('Failed to fetch results');
+                const data = await response.json();
+                setResults(data.map((res: any) => ({
+                    result: res.result,
+                    profitLoss: res.profitLoss
+                })));
+            } catch (error) {
+                toast.error('Error fetching results');
+            }
+        };
+
+        fetchResults();
+    }, []);
+
+
+    useEffect(() => {
         setCurrentCapital(initialCapital);
     }, [initialCapital]);
 
@@ -128,7 +147,7 @@ const Dashboard: React.FC = () => {
 
             const data = await response.json();
             toast.success(data.message);
-            setResults([{ result, profitLoss }, ...results].slice(0, 50)); // Keep only the 50 most recent results
+            setResults((prevResults) => [{ result, profitLoss }, ...prevResults].slice(0, 50)); // Keep only the 50 most recent results
         } catch (error) {
             toast.error('Error saving result');
         }
@@ -145,7 +164,6 @@ const Dashboard: React.FC = () => {
         setTargetProfitAmount(0);
         setStopLossPercent(0);
         setStopLossAmount(0);
-        setResults([]);
     };
 
     const percentageChange = calculatePercentageChange();
