@@ -5,16 +5,13 @@ import {
     ContentWrapper,
     Header,
     Button,
-    ProfileCard,
-    ProfileInfo,
-    ProfilePhoto,
-    ProfileWrapper // Import the new ProfileWrapper component
 } from '@/app/styled';
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import withAuth from '../components/withAuth';
 import Loader from '../components/Loading';
+import { ProfileCard, ProfileInfo, ProfilePhoto, ProfileWrapper } from './profile.styles';
 
 const ProfilePage: React.FC = () => {
     const { user, loading, logout, isAuthenticated } = useAuth();

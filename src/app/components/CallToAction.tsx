@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
-import { Button } from '../styled';
 import { useRouter } from 'next/navigation';
+import { Button } from './components.styles';
 
 const CallToAction: React.FC = () => {
     const router = useRouter();

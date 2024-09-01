@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardContainer, LargeCard } from '../styled';
+import { CardContainer, LargeCard } from './components.styles';
 
 const Features: React.FC = () => {
     return (

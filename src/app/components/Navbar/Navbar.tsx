@@ -1,19 +1,7 @@
 import { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import {
-    NavbarContainer,
-    Logo,
-    NavLinks,
-    NavLink,
-    AuthButton,
-    MobileMenuButton,
-    MobileNavLinks,
-    ProfileMenu,
-    ProfileButton,
-    DropdownMenu,
-    DropdownItem
-} from '../styled';
+import { useAuth } from '../../context/AuthContext';
 import { FaUserCircle } from 'react-icons/fa';
+import { AuthButton, DropdownItem, DropdownMenu, Logo, MobileMenuButton, MobileNavLinks, NavbarContainer, NavLink, NavLinks, ProfileButton, ProfileMenu } from './Navbar.styles';
 
 const Navbar = () => {
     const { isAuthenticated, user, logout } = useAuth();

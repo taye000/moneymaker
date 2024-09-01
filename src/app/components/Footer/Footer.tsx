@@ -1,7 +1,8 @@
-import { FooterContainer, FooterLinks, SocialIcons, SubscribeSection, Button, Input } from '../styled';
-import TwitterIcon from '../../../public/twitter.svg';
-import EmailIcon from '../../../public/email.svg';
-import TelegramIcon from '../../../public/telegram.svg';
+import TwitterIcon from '../../../../public/twitter.svg';
+import EmailIcon from '../../../../public/email.svg';
+import TelegramIcon from '../../../../public/telegram.svg';
+import { Button } from '../components.styles';
+import { FooterContainer, SocialIcons, FooterLinks, SubscribeSection, Input } from './Footer.styles';
 
 const Footer = () => {
     return (

@@ -2,8 +2,8 @@
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
 import GlobalStyle from './GlobalStyles';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 
