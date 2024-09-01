@@ -68,35 +68,29 @@ const Dashboard: React.FC = () => {
         return ((currentCapital - initialCapital) / initialCapital) * 100;
     };
 
-    const handleAddResult = () => {
+    const handleAddResult = async () => {
         const isProfit = result > breakEven;
         const profitLoss = isProfit ? stake : -stake;
 
-        // Update currentCapital based on profit or loss
         setCurrentCapital((prevCapital) => {
             const newCapital = prevCapital + profitLoss;
 
-            // Show toast if current capital is zero or less
             if (newCapital <= 0) {
                 toast.error('You have no more capital to stake!');
             }
 
-            // Check for target profit percent
             if (targetProfitPercent > 0 && calculatePercentageChange() >= targetProfitPercent) {
                 toast.success(`Target profit percentage (${targetProfitPercent}%) reached!`);
             }
 
-            // Check for stop loss percent
             if (stopLossPercent > 0 && calculatePercentageChange() <= -stopLossPercent) {
                 toast.error(`Stop loss percentage (${stopLossPercent}%) reached!`);
             }
 
-            // Check for target profit amount
             if (targetProfitAmount > 0 && newCapital >= targetProfitAmount) {
                 toast.success(`Target profit amount ($${targetProfitAmount.toFixed(2)}) reached!`);
             }
 
-            // Check for stop loss amount
             if (stopLossAmount > 0 && newCapital <= stopLossAmount) {
                 toast.error(`Stop loss amount ($${stopLossAmount.toFixed(2)}) reached!`);
             }
@@ -104,8 +98,39 @@ const Dashboard: React.FC = () => {
             return newCapital;
         });
 
-        // Add the result to the list of results
-        setResults([{ result, profitLoss }, ...results].slice(0, 50)); // Keep only the 50 most recent results
+        const resultData = {
+            user: user?._id,
+            initialCapital,
+            stake,
+            result,
+            breakEven,
+            currentCapital: currentCapital + profitLoss,
+            targetProfitPercent,
+            targetProfitAmount,
+            stopLossPercent,
+            stopLossAmount,
+        };
+        console.log({ resultData });
+
+        try {
+            const response = await fetch('/api/results', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(resultData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to save result');
+            }
+
+            const data = await response.json();
+            toast.success(data.message);
+            setResults([{ result, profitLoss }, ...results].slice(0, 50)); // Keep only the 50 most recent results
+        } catch (error) {
+            toast.error('Error saving result');
+        }
     };
 
     // Reset all state values to their initial defaults
