@@ -120,7 +120,7 @@ const fadeIn = keyframes`
 
 export const ResultCard = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr); /* Default to 6 columns */
   grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
   gap: ${({ theme }) => theme.spacing.small};
   background-color: ${({ theme }) => theme.colors.neutralLight};
@@ -129,15 +129,21 @@ export const ResultCard = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.cardShadow};
   margin-top: ${({ theme }) => theme.spacing.medium};
   overflow-y: auto;
+  overflow-x: hidden;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.smallTablet}) {
-    grid-template-columns: repeat(5, 1fr);
-    grid-auto-rows: minmax(100px, auto);
+  @media (max-width: ${({ theme }) => theme.breakpoints.largeTablet}) {
+    max-height: calc(8 * 100px); 
+    grid-template-columns: repeat(4, 1fr);
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.largeTablet}) {
-    grid-template-columns: repeat(5, 1fr);
-    grid-auto-rows: minmax(100px, auto);
+  @media (max-width: ${({ theme }) => theme.breakpoints.mediumTablet}) {
+    max-height: calc(6 * 100px);
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    max-height: calc(5 * 100px); 
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 

@@ -432,7 +432,7 @@ const Dashboard: React.FC = () => {
                     </div>
                     {results.length === 0 ? (
                         <NoResultsMessage>
-                            Oh no! It looks like the results took a vacation. Let's bring them back with some fresh data!
+                            Oh no! It looks like the results took a vacation. Let&apos;s bring them back with some fresh data!
                         </NoResultsMessage>
                     ) : (
                         <ResultCard>
