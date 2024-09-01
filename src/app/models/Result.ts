@@ -26,6 +26,10 @@ const ResultDataSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  profitLoss: {
+    type: Number,
+    default: 0,
+  },
   targetProfitPercent: {
     type: Number,
     default: 0,

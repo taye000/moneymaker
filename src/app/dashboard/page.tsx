@@ -105,6 +105,7 @@ const Dashboard: React.FC = () => {
             result,
             breakEven,
             currentCapital: currentCapital + profitLoss,
+            profitLoss,
             targetProfitPercent,
             targetProfitAmount,
             stopLossPercent,
