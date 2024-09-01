@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardContainer, Card } from '../styled';
+import { Card, CardContainer } from './components.styles';
 
 const WhyChooseUs: React.FC = () => {
     return (

@@ -2,7 +2,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation'; // Import useRouter from next/router
-import { Container, ContentWrapper, Button, Title } from '../styled';
+import { Button } from '../components.styles';
+import { Container, ContentWrapper, Title } from './Hero.styles';
 
 const Hero: React.FC = () => {
     const router = useRouter();
@@ -21,13 +22,13 @@ const Hero: React.FC = () => {
                     </p>
                     <Button onClick={handleGetStartedClick}>Get Started</Button>
                 </div>
-                <div style={{ marginTop: '2rem' }}> {/* Optional inline style for spacing */}
+                <div style={{ marginTop: '2rem' }}>
                     <Image
                         src="/hero.jpg"
                         alt="Moneymakers Hero"
-                        width={500} // Adjust width as needed
-                        height={300} // Adjust height as needed
-                        layout="responsive" // Adjust layout as needed
+                        width={500}
+                        height={300}
+                        layout="responsive"
                     />
                 </div>
             </ContentWrapper>
