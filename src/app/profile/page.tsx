@@ -5,13 +5,24 @@ import {
     ContentWrapper,
     Header,
     Button,
+    AuthButton,
+    RedButton,
 } from '@/app/styled';
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import withAuth from '../components/withAuth';
 import Loader from '../components/Loading';
-import { ProfileCard, ProfileInfo, ProfilePhoto, ProfileWrapper } from './profile.styles';
+import {
+    ProfileCard,
+    ProfilePhoto,
+    ProfileInfo,
+    ProfileDetailSection,
+    ButtonGroup,
+    SectionTitle,
+    ProfileWrapper,
+    PreferenceRow,
+} from './profile.styles';
 
 const ProfilePage: React.FC = () => {
     const { user, loading, logout, isAuthenticated } = useAuth();
@@ -48,6 +59,10 @@ const ProfilePage: React.FC = () => {
         }
     };
 
+    const handleEditProfile = () => {
+        router.push('/profile/edit'); // Redirect to the edit profile page
+    };
+
     return (
         <Container>
             <ContentWrapper>
@@ -55,6 +70,7 @@ const ProfilePage: React.FC = () => {
                     <h1>Profile</h1>
                 </Header>
                 <ProfileWrapper>
+                    {/* Personal Info Section */}
                     <ProfileCard>
                         <ProfilePhoto
                             src={user?.photo || defaultPhoto}
@@ -63,14 +79,31 @@ const ProfilePage: React.FC = () => {
                         <ProfileInfo>
                             <h2>{user?.name}</h2>
                             <p>{user?.email}</p>
-                            <Button
-                                onClick={handleLogout}
-                                style={{ marginTop: '20px' }}
-                            >
-                                Logout
-                            </Button>
                         </ProfileInfo>
                     </ProfileCard>
+
+                    {/* Additional Details Section */}
+                    <ProfileDetailSection>
+                        <SectionTitle>Preferences</SectionTitle>
+                        {user?.shortcuts?.stake && user.shortcuts.stake.length > 0 && (
+                            <PreferenceRow>
+                                <p><strong>Stake Shortcuts:</strong> {user.shortcuts.stake.join(', ')}</p>
+                            </PreferenceRow>
+                        )}
+                        {user?.shortcuts?.breakEven && user.shortcuts.breakEven.length > 0 && (
+                            <PreferenceRow>
+                                <p><strong>Break-even Shortcuts:</strong> {user.shortcuts.breakEven.join(', ')}</p>
+                            </PreferenceRow>
+                        )}
+                        <PreferenceRow>
+                            <p><strong>Result Enabled:</strong> {user?.shortcuts?.result?.enabled ? 'Yes' : 'No'}</p>
+                        </PreferenceRow>
+                    </ProfileDetailSection>
+
+                    <ButtonGroup>
+                        <RedButton onClick={handleLogout}>Logout</RedButton>
+                        <Button onClick={handleEditProfile}>Edit Profile</Button>
+                    </ButtonGroup>
                 </ProfileWrapper>
             </ContentWrapper>
         </Container>

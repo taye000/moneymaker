@@ -391,7 +391,7 @@ const Dashboard: React.FC = () => {
                                 onChange={(e) => setBreakEven(Number(e.target.value))}
                             />
                             <ShortcutContainer>
-                                {[1.3, 1.5, 2.0].map((value) => (
+                                {user?.shortcuts?.breakEven.map((value: any) => (
                                     <ShortcutCard
                                         key={value}
                                         onClick={() => handleShortcutClick('breakEven', value)}
@@ -410,7 +410,7 @@ const Dashboard: React.FC = () => {
                                 onChange={(e) => setStake(Number(e.target.value))}
                             />
                             <ShortcutContainer>
-                                {[10, 100, 200].map((value) => (
+                                {user?.shortcuts?.stake.map((value: any) => (
                                     <ShortcutCard
                                         key={value}
                                         onClick={() => handleShortcutClick('stake', value)}
@@ -428,20 +428,22 @@ const Dashboard: React.FC = () => {
                                 value={result}
                                 onChange={(e) => setResult(Number(e.target.value))}
                             />
-                            <ShortcutContainer>
-                                <ShortcutCard
-                                    onClick={() => handleShortcutClick('result', breakEven + 0.1)}
-                                    $isSelected={result === breakEven + 0.1}
-                                >
-                                    Win
-                                </ShortcutCard>
-                                <ShortcutCard
-                                    onClick={() => handleShortcutClick('result', breakEven - 1)}
-                                    $isSelected={result === breakEven - 1}
-                                >
-                                    Lose
-                                </ShortcutCard>
-                            </ShortcutContainer>
+                            {user?.shortcuts?.result?.enabled && (
+                                <ShortcutContainer>
+                                    <ShortcutCard
+                                        onClick={() => handleShortcutClick('result', breakEven + 0.1)}
+                                        $isSelected={result === breakEven + 0.1}
+                                    >
+                                        Win
+                                    </ShortcutCard>
+                                    <ShortcutCard
+                                        onClick={() => handleShortcutClick('result', breakEven - 1)}
+                                        $isSelected={result === breakEven - 1}
+                                    >
+                                        Lose
+                                    </ShortcutCard>
+                                </ShortcutContainer>
+                            )}
                         </InputGroup>
                         <HelpTextContainer>
                             <HelpIcon>

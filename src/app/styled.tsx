@@ -137,6 +137,31 @@ export const Button = styled.button`
   }
 `;
 
+export const RedButton = styled.button`
+  width: auto;
+  padding: ${({ theme }) => theme.spacing.small} ${({ theme }) => theme.spacing.medium};
+  background-color: ${({ theme }) => theme.colors.highlight};
+  color: ${({ theme }) => theme.colors.textOnPrimary};
+  border: none;
+  border-radius: ${({ theme }) => theme.borderRadius};
+  cursor: pointer;
+  margin-top: ${({ theme }) => theme.spacing.medium};
+
+  // Center the button in its container if you want
+  display: block; 
+  margin-left: auto;
+  margin-right: auto;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.primaryHover};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 100%;
+    padding: ${({ theme }) => theme.spacing.medium};
+  }
+`;
+
 
 export const Form = styled.form`
   width: 100%;
