@@ -113,7 +113,7 @@ export const AuthButton = styled.a`
 `;
 
 export const Button = styled.button`
-  width: auto; // Default width to auto so it adjusts based on its content
+  width: auto;
   padding: ${({ theme }) => theme.spacing.small} ${({ theme }) => theme.spacing.medium};
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.textOnPrimary};
@@ -132,8 +132,8 @@ export const Button = styled.button`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: 100%; // On smaller screens, the button takes up the full width
-    padding: ${({ theme }) => theme.spacing.medium}; // Adjust padding for mobile for a more tappable area
+    width: 100%;
+    padding: ${({ theme }) => theme.spacing.medium};
   }
 `;
 
