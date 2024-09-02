@@ -51,7 +51,7 @@ const Dashboard: React.FC = () => {
 
     const handleShortcutClick = (type: 'breakEven' | 'stake' | 'result', value: number) => {
         if (type === 'breakEven') setBreakEven(value);
-        if (type === 'stake') setStake(value);
+        if (type === 'stake') setStake((prevStake) => prevStake + value);
         if (type === 'result') setResult(value);
     };
 
