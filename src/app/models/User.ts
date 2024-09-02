@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
+import { IUser } from "../@types/user";
+import ShortcutsSchema from "./Shortcuts";
 
-const UserSchema = new mongoose.Schema(
+const UserSchema: mongoose.Schema<IUser> = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -15,6 +17,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    photo: {
+      type: String,
+      default: "",
+    },
     refreshToken: {
       type: String,
       default: "",
@@ -26,6 +32,16 @@ const UserSchema = new mongoose.Schema(
     recoveryCodeExpiry: {
       type: Date,
       default: null,
+    },
+    shortcuts: {
+      type: ShortcutsSchema,
+      default: {
+        stake: [10, 100, 200],
+        breakEven: [1.3, 1.5, 2],
+        result: {
+          enabled: true,
+        },
+      },
     },
   },
   {

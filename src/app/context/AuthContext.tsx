@@ -7,6 +7,7 @@ interface AuthContextProps {
     isAuthenticated: boolean;
     login: (token: string) => void;
     logout: () => void;
+    updateUser: (user: any) => void;
     loading: boolean;
 }
 
@@ -65,6 +66,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     };
 
+    const updateUser = (updatedUser: any) => {
+        setUser(updatedUser);
+        router.push('/profile');
+    };
+
     const logout = () => {
         document.cookie = 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;';
         setUser(null);
@@ -72,7 +78,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, logout, loading }}>
+        <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, logout, updateUser, loading }}>
             {loading ? <Loader /> : children}
         </AuthContext.Provider>
     );

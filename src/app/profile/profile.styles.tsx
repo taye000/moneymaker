@@ -1,6 +1,16 @@
 "use client";
 import styled from 'styled-components';
 
+export const ProfileWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: ${({ theme }) => theme.spacing.large} 0;
+`;
+
 export const ProfileCard = styled.div`
     display: flex;
     align-items: center;
@@ -14,7 +24,6 @@ export const ProfileCard = styled.div`
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 
     &:hover {
-        transform: translateY(-5px);
         box-shadow: ${({ theme }) => theme.shadows.cardShadow} 0 10px 20px;
     }
 `;
@@ -31,7 +40,6 @@ export const ProfilePhoto = styled.img`
 export const ProfileInfo = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
 
     h2 {
         margin: 0;
@@ -47,17 +55,47 @@ export const ProfileInfo = styled.div`
     }
 `;
 
-export const ProfileWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+export const ProfileDetailSection = styled.div`
+    background-color: ${({ theme }) => theme.colors.backgroundSecondary};
+    padding: ${({ theme }) => theme.spacing.large};
+    border-radius: ${({ theme }) => theme.borderRadius};
+    box-shadow: ${({ theme }) => theme.shadows.cardShadow};
+    margin-top: ${({ theme }) => theme.spacing.large};
     width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: ${({ theme }) => theme.spacing.large} 0;
+    max-width: 500px;
+
+    p {
+        color: ${({ theme }) => theme.colors.text};
+        font-size: ${({ theme }) => theme.fontSizes.medium};
+        margin: ${({ theme }) => theme.spacing.small} 0;
+    }
+`;
+
+export const SectionTitle = styled.h3`
+    margin: 0 0 ${({ theme }) => theme.spacing.medium} 0;
+    color: ${({ theme }) => theme.colors.text};
+    font-size: ${({ theme }) => theme.fontSizes.medium};
+    border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
+    padding-bottom: ${({ theme }) => theme.spacing.small};
+`;
+
+export const PreferenceRow = styled.div`
+    margin-bottom: ${({ theme }) => theme.spacing.medium};
+`;
+
+export const ButtonGroup = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 500px;
+    margin-top: ${({ theme }) => theme.spacing.large};
 
     @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-        padding: ${({ theme }) => theme.spacing.medium} 0;
+        flex-direction: column;
+        gap: ${({ theme }) => theme.spacing.small};
+
+        button {
+            width: 100%;
+        }
     }
 `;
