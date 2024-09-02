@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import withAuth from '../components/withAuth';
 import { Title } from '../styled';
-import { Container, Button, DashboardContainer, CapitalCard, ColumnContainer, Section, CardTitle, CardValue, ProfitLossIndicator, BoldValue, InputGroupContainer, InputGroupSection, InputGroup, InputLabel, NumberInput, HelpTextContainer, HelpIcon, HelpText, ResultCard, NewResultItem, ResultItem, Checkbox, DeleteButton, ResultItemContent, ResultItemActions, TrashIcon, NoResultsMessage } from './dashboard.styles';
+import { Container, Button, DashboardContainer, CapitalCard, ColumnContainer, Section, CardTitle, CardValue, ProfitLossIndicator, BoldValue, InputGroupContainer, InputGroupSection, InputGroup, InputLabel, NumberInput, HelpTextContainer, HelpIcon, HelpText, ResultCard, NewResultItem, ResultItem, Checkbox, DeleteButton, ResultItemContent, ResultItemActions, TrashIcon, NoResultsMessage, ShortcutContainer, ShortcutCard } from './dashboard.styles';
 
 const Dashboard: React.FC = () => {
     const { user, isAuthenticated } = useAuth();
@@ -48,6 +48,12 @@ const Dashboard: React.FC = () => {
 
         fetchResults();
     }, []);
+
+    const handleShortcutClick = (type: 'breakEven' | 'stake' | 'result', value: number) => {
+        if (type === 'breakEven') setBreakEven(value);
+        if (type === 'stake') setStake((prevStake) => prevStake + value);
+        if (type === 'result') setResult(value);
+    };
 
     const handleDeleteResult = async (id: string) => {
         try {
@@ -375,6 +381,8 @@ const Dashboard: React.FC = () => {
                                 onChange={(e) => setStopLossAmount(Number(e.target.value))}
                             />
                         </InputGroup>
+                    </InputGroupSection>
+                    <InputGroupSection>
                         <InputGroup>
                             <InputLabel>Break-Even:</InputLabel>
                             <NumberInput
@@ -382,9 +390,18 @@ const Dashboard: React.FC = () => {
                                 value={breakEven}
                                 onChange={(e) => setBreakEven(Number(e.target.value))}
                             />
+                            <ShortcutContainer>
+                                {[1.3, 1.5, 2.0].map((value) => (
+                                    <ShortcutCard
+                                        key={value}
+                                        onClick={() => handleShortcutClick('breakEven', value)}
+                                        $isSelected={breakEven === value}
+                                    >
+                                        {value}
+                                    </ShortcutCard>
+                                ))}
+                            </ShortcutContainer>
                         </InputGroup>
-                    </InputGroupSection>
-                    <InputGroupSection>
                         <InputGroup>
                             <InputLabel>Stake per Round:</InputLabel>
                             <NumberInput
@@ -392,6 +409,17 @@ const Dashboard: React.FC = () => {
                                 value={stake}
                                 onChange={(e) => setStake(Number(e.target.value))}
                             />
+                            <ShortcutContainer>
+                                {[10, 100, 200].map((value) => (
+                                    <ShortcutCard
+                                        key={value}
+                                        onClick={() => handleShortcutClick('stake', value)}
+                                        $isSelected={stake === value}
+                                    >
+                                        {value}
+                                    </ShortcutCard>
+                                ))}
+                            </ShortcutContainer>
                         </InputGroup>
                         <InputGroup>
                             <InputLabel>Result:</InputLabel>
@@ -400,13 +428,27 @@ const Dashboard: React.FC = () => {
                                 value={result}
                                 onChange={(e) => setResult(Number(e.target.value))}
                             />
+                            <ShortcutContainer>
+                                <ShortcutCard
+                                    onClick={() => handleShortcutClick('result', breakEven + 0.1)}
+                                    $isSelected={result === breakEven + 0.1}
+                                >
+                                    Win
+                                </ShortcutCard>
+                                <ShortcutCard
+                                    onClick={() => handleShortcutClick('result', breakEven - 1)}
+                                    $isSelected={result === breakEven - 1}
+                                >
+                                    Lose
+                                </ShortcutCard>
+                            </ShortcutContainer>
                         </InputGroup>
                         <HelpTextContainer>
                             <HelpIcon>
                                 <FaInfoCircle />
                             </HelpIcon>
                             <HelpText>
-                                This field is frequently updated with new results.
+                                Frequently updated.
                             </HelpText>
                         </HelpTextContainer>
                     </InputGroupSection>

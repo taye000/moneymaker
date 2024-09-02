@@ -280,3 +280,60 @@ export const NoResultsMessage = styled.p`
   padding: ${({ theme }) => theme.spacing.medium};
   border-radius: ${({ theme }) => theme.borderRadius};
 `;
+
+export const ShortcutContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+`;
+
+export const ShortcutCard = styled.div<{ $isSelected?: boolean }>`
+  width: 40px;
+  height: 30px;
+  background-color: ${({ $isSelected, theme }) => ($isSelected ? theme.colors.primary : theme.colors.secondary)};
+  color: ${({ theme }) => theme.colors.text};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.primaryHover};
+  }
+`;
+
+export const InputSection = styled.div`
+  margin-bottom: 30px;
+`;
+
+export const InputsLabel = styled.label`
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+`;
+
+export const NumbersInput = styled.input`
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: 5px;
+  font-size: 1rem;
+`;
+
+export const AddResultButton = styled.button`
+  padding: 10px 20px;
+  background-color: ${({ theme }) => theme.colors.success};
+  color: ${({ theme }) => theme.colors.textLight};
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.successHover};
+  }
+`;
