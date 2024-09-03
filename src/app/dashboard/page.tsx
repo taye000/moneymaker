@@ -199,7 +199,7 @@ const Dashboard: React.FC = () => {
                 toast.error(`Stop loss percentage (${stopLossPercent}%) reached!`);
             }
 
-            if (targetProfitAmount > 0 && newCapital >= targetProfitAmount) {
+            if (profitLoss > 0 && profitLoss >= targetProfitAmount) {
                 toast.success(`Target profit amount ($${targetProfitAmount.toFixed(2)}) reached!`);
             }
 
