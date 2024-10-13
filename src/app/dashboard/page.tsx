@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import withAuth from '../components/withAuth';
 import { Title } from '../styled';
-import { Container, Button, DashboardContainer, CapitalCard, ColumnContainer, Section, CardTitle, CardValue, ProfitLossIndicator, BoldValue, InputGroupContainer, InputGroupSection, InputGroup, InputLabel, NumberInput, HelpTextContainer, HelpIcon, HelpText, ResultCard, NewResultItem, ResultItem, Checkbox, DeleteButton, ResultItemContent, ResultItemActions, TrashIcon, NoResultsMessage, ShortcutContainer, ShortcutCard, StreakCard, StreakContainer, ResultText } from './dashboard.styles';
+import { Container, Button, DashboardContainer, CapitalCard, ColumnContainer, Section, CardTitle, CardValue, ProfitLossIndicator, BoldValue, InputGroupContainer, InputGroupSection, InputGroup, InputLabel, NumberInput, HelpTextContainer, HelpIcon, HelpText, ResultCard, NewResultItem, ResultItem, Checkbox, DeleteButton, ResultItemContent, ResultItemActions, TrashIcon, NoResultsMessage, ShortcutContainer, ShortcutCard, StreakCard, StreakContainer, ResultText, SectionTitle } from './dashboard.styles';
 
 const Dashboard: React.FC = () => {
     const { user, isAuthenticated } = useAuth();
@@ -510,6 +510,7 @@ const Dashboard: React.FC = () => {
                     <Title>Results</Title>
                     <div>
                         <Section>
+                            <SectionTitle>Streaks</SectionTitle>
                             <StreakContainer>
                                 {finalStrawHistory.length > 0 ? (
                                     finalStrawHistory.map((streak, index) => (

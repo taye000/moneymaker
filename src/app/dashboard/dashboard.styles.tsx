@@ -89,6 +89,12 @@ export const CardTitle = styled.h4`
   margin-bottom: ${({ theme }) => theme.spacing.small};
 `;
 
+export const SectionTitle = styled.h4`
+  color: ${({ theme }) => theme.colors.primary};
+  margin-bottom: ${({ theme }) => theme.spacing.small};
+  text-align: left;
+`;
+
 export const CardValue = styled.div`
   display: flex;
   align-items: center;
@@ -336,10 +342,6 @@ export const StreakCard = styled.div<{ streak: number }>`
   margin-right: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.primaryHover};
-  }
 `;
 
 export const InputSection = styled.div`
