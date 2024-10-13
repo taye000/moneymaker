@@ -58,24 +58,54 @@ const Dashboard: React.FC = () => {
         let streak = 0;
         let lastFinalStraw = 0;
         const finalStraws: number[] = [];
+        let currentStreakType: "win" | "lose" | null = null;
 
         data.forEach((res) => {
-            if (res.result < res.breakEven) {
-                streak += 1;
-            } else {
-                if (streak > 0) {
-                    finalStraws.push(streak);
-                    lastFinalStraw = streak;
+            const isWin = res.result > res.breakEven;
+
+            if (isWin) {
+                // If it was a win streak or null, increment the streak
+                if (currentStreakType === "win" || currentStreakType === null) {
+                    streak += 1;
+                    currentStreakType = "win";
+                } else {
+                    // If it switches from lose to win, store the lose streak
+                    if (streak > 0) {
+                        finalStraws.push(streak);
+                        lastFinalStraw = streak;
+                    }
+                    streak = 1; // Start new win streak
+                    currentStreakType = "win";
                 }
-                streak = 0; // Reset streak
+            } else {
+                // If it was a losing streak or null, increment the streak
+                if (currentStreakType === "lose" || currentStreakType === null) {
+                    streak += 1;
+                    currentStreakType = "lose";
+                } else {
+                    // If it switches from win to lose, store the win streak
+                    if (streak > 0) {
+                        finalStraws.push(streak);
+                        lastFinalStraw = streak;
+                    }
+                    streak = 1; // Start new lose streak
+                    currentStreakType = "lose";
+                }
             }
         });
+
+        // Push the last streak if it didn't reset after the loop
+        if (streak > 0) {
+            finalStraws.push(streak);
+            lastFinalStraw = streak;
+        }
 
         // Update streak count and final straw history
         setStreakCount(streak);
         setFinalStraw(lastFinalStraw);
         setFinalStrawHistory(finalStraws.slice(0, 10));
     };
+
 
     const handleShortcutClick = (type: 'breakEven' | 'stake' | 'result', value: number) => {
         if (type === 'breakEven') setBreakEven(value);
@@ -192,14 +222,6 @@ const Dashboard: React.FC = () => {
     };
 
     const handleAddResult = async () => {
-        if (initialCapital <= 0) {
-            toast.error('Please enter Initial Capital');
-            return;
-        }
-        if (stake <= 0) {
-            toast.error('Please enter Stake per Round');
-            return;
-        }
         if (breakEven <= 0) {
             toast.error('Please enter Break-Even');
             return;
@@ -211,18 +233,6 @@ const Dashboard: React.FC = () => {
 
         const isProfit = result > breakEven;
         const profitLoss = isProfit ? stake : -stake;
-
-        // Track the streak count for results below breakeven
-        if (!isProfit) {
-            setStreakCount(streakCount + 1);
-        } else {
-            if (streakCount > 0) {
-                // Save the finalStraw before resetting the streak
-                setFinalStraw(streakCount);
-                setFinalStrawHistory((prev) => [streakCount, ...prev].slice(0, 5)); // Keep the latest 5
-            }
-            setStreakCount(0); // Reset streak
-        }
 
         setCurrentCapital((prevCapital) => {
             const newCapital = prevCapital + profitLoss;
@@ -281,6 +291,10 @@ const Dashboard: React.FC = () => {
             const data = await response.json();
             toast.success(data.message);
             setResults((prevResults) => [{ id: data.id, result, profitLoss }, ...prevResults].slice(0, 50));
+
+            // Calculate streak data after adding new result
+            const updatedResults = [{ id: data.id, result, profitLoss, breakEven }, ...results];
+            calculateStreakData(updatedResults); // Recalculate streaks based on updated results
         } catch (error) {
             toast.error('Error saving result');
         }
@@ -477,7 +491,7 @@ const Dashboard: React.FC = () => {
                                         Win
                                     </ShortcutCard>
                                     <ShortcutCard
-                                        onClick={() => handleShortcutClick('result', breakEven - 1)}
+                                        onClick={() => handleShortcutClick('result', breakEven - 0.1)}
                                         $isSelected={result === breakEven - 0.1}
                                     >
                                         Lose

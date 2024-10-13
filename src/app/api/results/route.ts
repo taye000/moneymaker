@@ -36,11 +36,8 @@ export async function POST(request: Request) {
       },
       { status: 201 }
     );
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to save result" },
-      { status: 500 }
-    );
+  } catch (error: any) {
+    return NextResponse.json({ message: error.message, status: 500 });
   }
 }
 

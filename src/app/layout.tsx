@@ -26,36 +26,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           gutter={8}
           containerClassName=""
           containerStyle={{
-          }}
-          toastOptions={{
-            className: '',
-            duration: 2000,
-            style: {
-              background: theme.colors.background,
-              color: theme.colors.text,
-              borderRadius: '8px',
-              border: `1px solid ${theme.colors.border}`,
-              fontSize: theme.typography.heading3.fontSize,
-              padding: theme.spacing.medium,
-            },
-            success: {
-              style: {
-                background: theme.colors.green,
-                color: '#fff',
-              },
-            },
-            error: {
-              style: {
-                background: theme.colors.red,
-                color: '#fff',
-              },
-            },
-            loading: {
-              style: {
-                background: theme.colors.primary,
-                color: '#fff',
-              },
-            },
+            fontSize: theme.fontSizes.small,
+            padding: 0,
+            margin: 0,
+            listStyleType: 'none',
+
           }}
         />
       </body>
