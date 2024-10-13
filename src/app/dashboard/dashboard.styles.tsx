@@ -291,7 +291,44 @@ export const ShortcutCard = styled.div<{ $isSelected?: boolean }>`
   width: 40px;
   height: 30px;
   background-color: ${({ $isSelected, theme }) => ($isSelected ? theme.colors.primary : theme.colors.secondary)};
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.textOnPrimary};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.primaryHover};
+  }
+`;
+
+export const StreakContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+`;
+
+// Function to calculate color based on streak count
+const getStreakColor = (streak: number) => {
+  if (streak < 2) {
+    return '#c8e6c9'; // Light green for low streaks
+  } else if (streak < 4) {
+    return '#66bb6a'; // Medium green for moderate streaks
+  } else if (streak < 7) {
+    return '#388e3c'; // Darker green for high streaks
+  } else {
+    return '#ffd700'; // Gold for very high streaks
+  }
+};
+
+export const StreakCard = styled.div<{ streak: number }>`
+  width: 40px;
+  height: 30px;
+  background-color: ${({ streak }) => getStreakColor(streak)};
+  color: ${({ theme }) => theme.colors.textOnPrimary};
   border-radius: ${({ theme }) => theme.borderRadius};
   display: flex;
   align-items: center;
