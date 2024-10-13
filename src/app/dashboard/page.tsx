@@ -506,7 +506,7 @@ const Dashboard: React.FC = () => {
                             <StreakContainer>
                                 {finalStrawHistory.length > 0 ? (
                                     finalStrawHistory.map((fs, index) => (
-                                        <StreakCard key={index}>
+                                        <StreakCard key={index} streak={fs}>
                                             {fs}H
                                         </StreakCard>
                                     ))
