@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import withAuth from '../components/withAuth';
 import { Title } from '../styled';
-import { Container, Button, DashboardContainer, CapitalCard, ColumnContainer, Section, CardTitle, CardValue, ProfitLossIndicator, BoldValue, InputGroupContainer, InputGroupSection, InputGroup, InputLabel, NumberInput, HelpTextContainer, HelpIcon, HelpText, ResultCard, NewResultItem, ResultItem, Checkbox, DeleteButton, ResultItemContent, ResultItemActions, TrashIcon, NoResultsMessage, ShortcutContainer, ShortcutCard, StreakCard, StreakContainer } from './dashboard.styles';
+import { Container, Button, DashboardContainer, CapitalCard, ColumnContainer, Section, CardTitle, CardValue, ProfitLossIndicator, BoldValue, InputGroupContainer, InputGroupSection, InputGroup, InputLabel, NumberInput, HelpTextContainer, HelpIcon, HelpText, ResultCard, NewResultItem, ResultItem, Checkbox, DeleteButton, ResultItemContent, ResultItemActions, TrashIcon, NoResultsMessage, ShortcutContainer, ShortcutCard, StreakCard, StreakContainer, ResultText } from './dashboard.styles';
 
 const Dashboard: React.FC = () => {
     const { user, isAuthenticated } = useAuth();
@@ -27,10 +27,10 @@ const Dashboard: React.FC = () => {
     const [targetProfitAmount, setTargetProfitAmount] = useState<number>(0);
     const [stopLossPercent, setStopLossPercent] = useState<number>(0);
     const [stopLossAmount, setStopLossAmount] = useState<number>(0);
-    const [results, setResults] = useState<{ result: number; profitLoss: number; id: string }[]>([]);
+    const [results, setResults] = useState<{ result: number; breakEven: number; profitLoss: number; id: string }[]>([]);
     const [selectedResults, setSelectedResults] = useState<Set<string>>(new Set());
     const [finalStraw, setFinalStraw] = useState<number>(0);
-    const [finalStrawHistory, setFinalStrawHistory] = useState<number[]>([]);
+    const [finalStrawHistory, setFinalStrawHistory] = useState<{ count: number; type: "W" | "L" }[]>([]);
     const [streakCount, setStreakCount] = useState<number>(0);
 
     useEffect(() => {
@@ -57,35 +57,33 @@ const Dashboard: React.FC = () => {
     const calculateStreakData = (data: any[]) => {
         let streak = 0;
         let lastFinalStraw = 0;
-        const finalStraws: number[] = [];
+        const finalStraws: { count: number; type: "W" | "L" }[] = [];
         let currentStreakType: "win" | "lose" | null = null;
 
         data.forEach((res) => {
             const isWin = res.result > res.breakEven;
 
             if (isWin) {
-                // If it was a win streak or null, increment the streak
                 if (currentStreakType === "win" || currentStreakType === null) {
                     streak += 1;
                     currentStreakType = "win";
                 } else {
                     // If it switches from lose to win, store the lose streak
                     if (streak > 0) {
-                        finalStraws.push(streak);
+                        finalStraws.push({ count: streak, type: "L" });
                         lastFinalStraw = streak;
                     }
                     streak = 1; // Start new win streak
                     currentStreakType = "win";
                 }
             } else {
-                // If it was a losing streak or null, increment the streak
                 if (currentStreakType === "lose" || currentStreakType === null) {
                     streak += 1;
                     currentStreakType = "lose";
                 } else {
                     // If it switches from win to lose, store the win streak
                     if (streak > 0) {
-                        finalStraws.push(streak);
+                        finalStraws.push({ count: streak, type: "W" });
                         lastFinalStraw = streak;
                     }
                     streak = 1; // Start new lose streak
@@ -96,7 +94,7 @@ const Dashboard: React.FC = () => {
 
         // Push the last streak if it didn't reset after the loop
         if (streak > 0) {
-            finalStraws.push(streak);
+            finalStraws.push({ count: streak, type: currentStreakType === "win" ? "W" : "L" });
             lastFinalStraw = streak;
         }
 
@@ -105,7 +103,6 @@ const Dashboard: React.FC = () => {
         setFinalStraw(lastFinalStraw);
         setFinalStrawHistory(finalStraws.slice(0, 10));
     };
-
 
     const handleShortcutClick = (type: 'breakEven' | 'stake' | 'result', value: number) => {
         if (type === 'breakEven') setBreakEven(value);
@@ -130,7 +127,6 @@ const Dashboard: React.FC = () => {
         try {
             // Convert selectedResults Set to an array of IDs and join them as a comma-separated string
             const ids = Array.from(selectedResults).join(',');
-            console.log('Deleting selected results:', ids);
 
             // Make the DELETE request with the IDs as query parameters
             const response = await fetch(`/api/results?ids=${ids}`, {
@@ -164,8 +160,6 @@ const Dashboard: React.FC = () => {
             } else {
                 newSet.add(id);
             }
-            console.log('Checkbox toggled:', id);  // Log the id when checkbox is pressed
-            console.log('Selected Results:', Array.from(newSet));  // Log the current selected results
             return newSet;
         });
     };
@@ -273,7 +267,6 @@ const Dashboard: React.FC = () => {
             stopLossPercent,
             stopLossAmount,
         };
-        console.log({ resultData });
 
         try {
             const response = await fetch('/api/results', {
@@ -290,7 +283,7 @@ const Dashboard: React.FC = () => {
 
             const data = await response.json();
             toast.success(data.message);
-            setResults((prevResults) => [{ id: data.id, result, profitLoss }, ...prevResults].slice(0, 50));
+            setResults((prevResults) => [{ id: data.id, result, profitLoss, breakEven }, ...prevResults].slice(0, 50));
 
             // Calculate streak data after adding new result
             const updatedResults = [{ id: data.id, result, profitLoss, breakEven }, ...results];
@@ -519,9 +512,9 @@ const Dashboard: React.FC = () => {
                         <Section>
                             <StreakContainer>
                                 {finalStrawHistory.length > 0 ? (
-                                    finalStrawHistory.map((fs, index) => (
-                                        <StreakCard key={index} streak={fs}>
-                                            {fs}H
+                                    finalStrawHistory.map((streak, index) => (
+                                        <StreakCard key={index} streak={streak.count}>
+                                            {streak.count} {streak.type}
                                         </StreakCard>
                                     ))
                                 ) : (
@@ -548,25 +541,29 @@ const Dashboard: React.FC = () => {
                         </NoResultsMessage>
                     ) : (
                         <ResultCard>
-                            {results.map(result => (
-                                <ResultItem key={result.id}>
-                                    <ResultItemContent>
-                                        <h4>Result: {result.result.toFixed(2)}</h4>
-                                        <p>
-                                            <ProfitLossIndicator $profit={result.profitLoss >= 0}>
-                                                {result.profitLoss >= 0 ? ' +' : ' -'}${Math.abs(result.profitLoss).toFixed(2)}
-                                            </ProfitLossIndicator>
-                                        </p>
-                                    </ResultItemContent>
-                                    <ResultItemActions>
-                                        <Checkbox
-                                            checked={selectedResults.has(result.id)}
-                                            onChange={() => handleCheckboxChange(result.id)}
-                                        />
-                                        <TrashIcon onClick={() => handleDeleteResult(result.id)} />
-                                    </ResultItemActions>
-                                </ResultItem>
-                            ))}
+                            {results.map(result => {
+                                const isWin = result.result > result.breakEven; // Determine if the result is a win
+
+                                return (
+                                    <ResultItem key={result.id}>
+                                        <ResultItemContent>
+                                            <ResultText isWin={isWin}>Result: {result.result.toFixed(2)}</ResultText>
+                                            <p>
+                                                <ProfitLossIndicator $profit={result.profitLoss >= 0}>
+                                                    {result.profitLoss >= 0 ? ' +' : ' -'}${Math.abs(result.profitLoss).toFixed(2)}
+                                                </ProfitLossIndicator>
+                                            </p>
+                                        </ResultItemContent>
+                                        <ResultItemActions>
+                                            <Checkbox
+                                                checked={selectedResults.has(result.id)}
+                                                onChange={() => handleCheckboxChange(result.id)}
+                                            />
+                                            <TrashIcon onClick={() => handleDeleteResult(result.id)} />
+                                        </ResultItemActions>
+                                    </ResultItem>
+                                );
+                            })}
                         </ResultCard>
                     )}
                 </div>
