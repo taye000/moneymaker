@@ -511,7 +511,7 @@ const Dashboard: React.FC = () => {
                                         </StreakCard>
                                     ))
                                 ) : (
-                                    <CardValue>No history yet</CardValue>
+                                    <NoResultsMessage>No streaks yet — your adventure is waiting!</NoResultsMessage>
                                 )}
                             </StreakContainer>
                         </Section>
