@@ -478,7 +478,7 @@ const Dashboard: React.FC = () => {
                                     </ShortcutCard>
                                     <ShortcutCard
                                         onClick={() => handleShortcutClick('result', breakEven - 1)}
-                                        $isSelected={result === breakEven - 1}
+                                        $isSelected={result === breakEven - 0.1}
                                     >
                                         Lose
                                     </ShortcutCard>
