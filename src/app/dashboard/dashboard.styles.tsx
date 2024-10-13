@@ -374,3 +374,9 @@ export const AddResultButton = styled.button`
     background-color: ${({ theme }) => theme.colors.successHover};
   }
 `;
+
+export const ResultText = styled.h4<{ isWin: boolean }>`
+  color: ${({ isWin, theme }) => (isWin ? theme.colors.blue : theme.colors.red)};
+  font-size: ${({ theme }) => theme.fontSizes.medium};
+  font-weight: bold;
+`;
