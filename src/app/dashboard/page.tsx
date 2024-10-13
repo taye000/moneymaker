@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import withAuth from '../components/withAuth';
 import { Title } from '../styled';
-import { Container, Button, DashboardContainer, CapitalCard, ColumnContainer, Section, CardTitle, CardValue, ProfitLossIndicator, BoldValue, InputGroupContainer, InputGroupSection, InputGroup, InputLabel, NumberInput, HelpTextContainer, HelpIcon, HelpText, ResultCard, NewResultItem, ResultItem, Checkbox, DeleteButton, ResultItemContent, ResultItemActions, TrashIcon, NoResultsMessage, ShortcutContainer, ShortcutCard } from './dashboard.styles';
+import { Container, Button, DashboardContainer, CapitalCard, ColumnContainer, Section, CardTitle, CardValue, ProfitLossIndicator, BoldValue, InputGroupContainer, InputGroupSection, InputGroup, InputLabel, NumberInput, HelpTextContainer, HelpIcon, HelpText, ResultCard, NewResultItem, ResultItem, Checkbox, DeleteButton, ResultItemContent, ResultItemActions, TrashIcon, NoResultsMessage, ShortcutContainer, ShortcutCard, StreakCard, StreakContainer } from './dashboard.styles';
 
 const Dashboard: React.FC = () => {
     const { user, isAuthenticated } = useAuth();
@@ -29,6 +29,9 @@ const Dashboard: React.FC = () => {
     const [stopLossAmount, setStopLossAmount] = useState<number>(0);
     const [results, setResults] = useState<{ result: number; profitLoss: number; id: string }[]>([]);
     const [selectedResults, setSelectedResults] = useState<Set<string>>(new Set());
+    const [finalStraw, setFinalStraw] = useState<number>(0);
+    const [finalStrawHistory, setFinalStrawHistory] = useState<number[]>([]);
+    const [streakCount, setStreakCount] = useState<number>(0);
 
     useEffect(() => {
         const fetchResults = async () => {
@@ -39,8 +42,10 @@ const Dashboard: React.FC = () => {
                 setResults(data.map((res: any) => ({
                     id: res._id,
                     result: res.result,
-                    profitLoss: res.profitLoss
+                    profitLoss: res.profitLoss,
+                    breakEven: res.breakEven
                 })));
+                calculateStreakData(data);
             } catch (error) {
                 toast.error('Error fetching results');
             }
@@ -48,6 +53,29 @@ const Dashboard: React.FC = () => {
 
         fetchResults();
     }, []);
+
+    const calculateStreakData = (data: any[]) => {
+        let streak = 0;
+        let lastFinalStraw = 0;
+        const finalStraws: number[] = [];
+
+        data.forEach((res) => {
+            if (res.result < res.breakEven) {
+                streak += 1;
+            } else {
+                if (streak > 0) {
+                    finalStraws.push(streak);
+                    lastFinalStraw = streak;
+                }
+                streak = 0; // Reset streak
+            }
+        });
+
+        // Update streak count and final straw history
+        setStreakCount(streak);
+        setFinalStraw(lastFinalStraw);
+        setFinalStrawHistory(finalStraws.slice(0, 10));
+    };
 
     const handleShortcutClick = (type: 'breakEven' | 'stake' | 'result', value: number) => {
         if (type === 'breakEven') setBreakEven(value);
@@ -183,6 +211,18 @@ const Dashboard: React.FC = () => {
 
         const isProfit = result > breakEven;
         const profitLoss = isProfit ? stake : -stake;
+
+        // Track the streak count for results below breakeven
+        if (!isProfit) {
+            setStreakCount(streakCount + 1);
+        } else {
+            if (streakCount > 0) {
+                // Save the finalStraw before resetting the streak
+                setFinalStraw(streakCount);
+                setFinalStrawHistory((prev) => [streakCount, ...prev].slice(0, 5)); // Keep the latest 5
+            }
+            setStreakCount(0); // Reset streak
+        }
 
         setCurrentCapital((prevCapital) => {
             const newCapital = prevCapital + profitLoss;
@@ -461,6 +501,21 @@ const Dashboard: React.FC = () => {
                 </div>
                 <div>
                     <Title>Results</Title>
+                    <div>
+                        <Section>
+                            <StreakContainer>
+                                {finalStrawHistory.length > 0 ? (
+                                    finalStrawHistory.map((fs, index) => (
+                                        <StreakCard key={index}>
+                                            {fs}H
+                                        </StreakCard>
+                                    ))
+                                ) : (
+                                    <CardValue>No history yet</CardValue>
+                                )}
+                            </StreakContainer>
+                        </Section>
+                    </div>
                     <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
                         {results.length > 0 && (
                             <DeleteButton onClick={handleDeleteAll}>
